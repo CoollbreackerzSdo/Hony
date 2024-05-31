@@ -42,8 +42,8 @@ services:
     image: mongo
     container_name: honyapi-mongo
     environment:
-      - MONGO_INITDB_ROOT_PASSWORD=${PUSER}
-      - MONGO_INITDB_ROOT_USERNAME=${PPASS}
+      - MONGO_INITDB_ROOT_PASSWORD=${PPASS}
+      - MONGO_INITDB_ROOT_USERNAME=${PUSER}
     expose:
       - 27017
     ports:

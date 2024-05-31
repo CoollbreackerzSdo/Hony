@@ -1,0 +1,19 @@
+# Please refer https://aka.ms/HTTPSinContainer on how to setup an https developer certificate for your ASP.NET Core service.
+name: hony
+
+services:
+  honyapi:
+    image: honyapi
+    build:
+      context: .
+      dockerfile: src/Hony.Api/Dockerfile
+      args:
+        - configuration=Debug
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    volumes:
+      - ~/.vsdbg:/remote_debugger:rw
+    develop:
+      watch:
+        - path: src/
+          action: rebuild

@@ -1,0 +1,65 @@
+# Please refer https://aka.ms/HTTPSinContainer on how to setup an https developer certificate for your ASP.NET Core service.
+name: hony
+
+services:
+  honyapi:
+    image: honyapi
+    container_name: honyapi-mix
+    build:
+      context: .
+      dockerfile: src/Hony.Api/Dockerfile
+    environment:
+      - POST_CONNECTION=server=192.168.0.2;port=5432;user id=${PUSER};password=${PPASS};database=${PDATA};
+      - MONG_CONNECTION=mongodb://${PUSER}:${PPASS}@192.168.0.3:27017
+    ports:
+      - 7001:8081
+      - 7000:8080
+    networks:
+      hony:
+        ipv4_address:  192.168.0.10
+    volumes:
+      - hony:/app
+    depends_on:
+      - honyapi.db.service
+      - honyapi.db.tokens
+  honyapi.db.service:
+    image: postgres
+    container_name: honyapi-postgres
+    environment:
+      - POSTGRES_USER=${PUSER}
+      - POSTGRES_PASSWORD=${PPASS}
+      - POSTGRES_DB=${PDARA}
+    expose:
+      - 5432
+    ports:
+      - 7010:5432
+    networks:
+      hony:
+        ipv4_address:  192.168.0.2
+    volumes:
+      - hony:/var/lib/postgres
+  honyapi.db.tokens:
+    image: mongo
+    container_name: honyapi-mongo
+    environment:
+      - MONGO_INITDB_ROOT_PASSWORD=${PUSER}
+      - MONGO_INITDB_ROOT_USERNAME=${PPASS}
+    expose:
+      - 27017
+    ports:
+      - 7011:27017
+    networks:
+      hony:
+        ipv4_address:  192.168.0.3
+    volumes:
+      - hony:/data/db
+volumes:
+  hony:
+    external: false
+networks:
+  hony:
+    external: false
+    ipam:
+      config:
+        - subnet: 192.168.0.0/20
+          gateway: 192.168.0.1

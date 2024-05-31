@@ -3,7 +3,7 @@ using Hony.Api;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Configuration.AddEnvServices();
+builder.Configuration.AddEnvConfigurations();
 
 builder.Services.AddOpenApi();
 

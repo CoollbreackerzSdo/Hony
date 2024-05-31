@@ -28,7 +28,7 @@ services:
     environment:
       - POSTGRES_USER=${PUSER}
       - POSTGRES_PASSWORD=${PPASS}
-      - POSTGRES_DB=${PDARA}
+      - POSTGRES_DB=${PDATA}
     expose:
       - 5432
     ports:

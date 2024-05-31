@@ -1,4 +1,6 @@
-﻿using Hony.Infrastructure.Database;
+﻿using Hony.Application.Common.Externals.UnitOfWord;
+using Hony.Infrastructure.Database;
+using Hony.Infrastructure.Implementations.UnitOfWord;
 
 using Microsoft.Extensions.DependencyInjection;
 
@@ -12,6 +14,8 @@ public static class ExtensionsBuilderServices
         {
             config.UseNpgsql(Environment.GetEnvironmentVariable("POST_CONNECTION"), b => b.MigrationsAssembly("Hony.Api"));
         });
+
+        services.AddTransient<IUnitOfWord, UnitOfWord>();
         return services;
     }
 }

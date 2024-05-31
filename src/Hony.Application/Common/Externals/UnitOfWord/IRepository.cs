@@ -10,9 +10,9 @@ public interface IRepository<T>
     where T : EntityBase
 {
     IQueryable<T> GetAll();
-    Option<T> SingleAsOption(Expression<Func<T, bool>> expression);
-    Option<T> FindAdOption<TKey>(TKey key);
+    Option<T?> SingleAsOption(Expression<Func<T, bool>> expression);
+    Option<T?> FindAdOption(EntityKey<Guid> key);
     void Add(T model);
-    void Remove<TKey>(TKey key);
-    void Disable<TKey>(TKey key);
+    bool ExecuteRemove(EntityKey<Guid> key);
+    bool ExecuteDisable(EntityKey<Guid> key);
 }

@@ -40,7 +40,12 @@ public static class ExtensionBuilderServices
     }
     public static IServiceCollection AddMiddlewares(this IServiceCollection services)
     {
-        services.AddExceptionHandler<GlobalErrorMiddleware>();
+        services.AddTransient<GlobalErrorMiddleware>();
         return services;
+    }
+    public static IApplicationBuilder MapMiddlewares(this WebApplication app)
+    {
+        app.UseMiddleware<GlobalErrorMiddleware>();
+        return app;
     }
 }

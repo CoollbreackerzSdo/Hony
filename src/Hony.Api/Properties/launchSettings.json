@@ -9,13 +9,6 @@
     }
   },
   "profiles": {
-    "Docker":{
-      "commandName": "Project",
-      "launchBrowser": false,
-      "dotnetRunMessages": true,
-      "launchUrl": "scalar/v1",
-      "applicationUrl": "https://localhost:8080;http://localhost:8081"
-    },
     "https": {
       "commandName": "Project",
       "dotnetRunMessages": true,

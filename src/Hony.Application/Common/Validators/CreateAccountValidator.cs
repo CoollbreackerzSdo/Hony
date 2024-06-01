@@ -4,7 +4,7 @@ using Hony.Application.Services.Handlers.Create;
 
 namespace Hony.Application.Common.Validators;
 
-public class CreateAccountValidator : AbstractValidator<CreateAccountHandlerCommand>
+public class CreateAccountValidator : AbstractValidator<CreateAccountCommandHandler>
 {
     public CreateAccountValidator()
     {

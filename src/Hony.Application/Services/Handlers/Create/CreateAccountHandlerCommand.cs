@@ -1,3 +1,3 @@
 namespace Hony.Application.Services.Handlers.Create;
 
-public readonly record struct CreateAccountHandlerCommand(string UserName, string Email, string Password, string? LastName = null, string? FirstName = null);
+public readonly record struct CreateAccountCommandHandler(string UserName, string Email, string Password, string? LastName = null, string? FirstName = null);

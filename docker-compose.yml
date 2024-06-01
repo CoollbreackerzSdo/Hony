@@ -12,8 +12,8 @@ services:
       - POST_CONNECTION=server=192.168.0.1;port=5432;user id=${PUSER};password=${PPASS};database=${PDATA};
       - MONG_CONNECTION=mongodb://${PUSER}:${PPASS}@192.168.0.3:27017
     ports:
-      - 7001:8081
-      - 7000:8080
+      - 8081:8081
+      - 8080:8080
     networks:
       hony:
         ipv4_address:  192.168.0.10

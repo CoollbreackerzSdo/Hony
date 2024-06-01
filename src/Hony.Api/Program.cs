@@ -15,16 +15,14 @@ builder.Services.AddOpenApi();
 builder.Services.AddMiddlewares();
 
 var app = builder.Build();
-
-// using var scopeContext = app.Services.CreateScope().ServiceProvider.GetRequiredService<HonyNpSqlContext>();
-// scopeContext.Database.Migrate();
-
+using var scopeContext = app.Services.CreateScope().ServiceProvider.GetRequiredService<HonyNpSqlContext>();
+scopeContext.Database.Migrate();
+// app.UseExceptionHandler();
 app.MapOpenApi();
 app.MapScalarApiReference();
-
 // Configure the HTTP request pipeline.
 app.UseHttpsRedirection();
-app.UseExceptionHandler();
 
+app.MapMiddlewares();
 app.MapAppEndpoints();
 app.Run();

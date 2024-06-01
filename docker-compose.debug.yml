@@ -11,8 +11,12 @@ services:
         - configuration=Debug
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=honymon
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/hony.pfx
+      - ASPNETCORE_URLS=https://+:8080;http://+:8081
     volumes:
       - ~/.vsdbg:/remote_debugger:rw
+      - ~/.aspnet/https:/https:ro
     develop:
       watch:
         - path: .

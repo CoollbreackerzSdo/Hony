@@ -8,7 +8,7 @@ namespace Hony.Application.Common.Mappers;
 [Mapper(EnumMappingStrategy = EnumMappingStrategy.ByValueCheckDefined, EnumMappingIgnoreCase = true)]
 internal static partial class AccountMapper
 {
-    public static AccountEntity ToAccount(CreateAccountHandlerCommand command)
+    public static AccountEntity ToAccount(CreateAccountCommandHandler command)
         => new()
         {
             UserName = command.UserName,
@@ -17,6 +17,6 @@ internal static partial class AccountMapper
         };
     [MapProperty([nameof(AccountEntity.Security), nameof(AccountEntity.Security.Email)], [nameof(AccountCredentials.Email)])]
     public static partial AccountCredentials ToCredentials(AccountEntity account);
-    private static partial AccountDetail ToDetail(CreateAccountHandlerCommand command);
-    private static partial AccountSecurity ToSecurity(CreateAccountHandlerCommand command);
+    private static partial AccountDetail ToDetail(CreateAccountCommandHandler command);
+    private static partial AccountSecurity ToSecurity(CreateAccountCommandHandler command);
 }

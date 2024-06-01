@@ -5,6 +5,8 @@ using Hony.Application.Common.Models;
 using Hony.Application.Services.Handlers;
 using Hony.Application.Services.Handlers.Create;
 
+using Microsoft.AspNetCore.Mvc;
+
 namespace Hony.Api.Endpoints.Auth;
 
 public class AuthEndpoint : IEndpoint
@@ -13,19 +15,20 @@ public class AuthEndpoint : IEndpoint
     {
         var api = builder.MapGroup("auth");
 
-        api.MapPost("register", async (CreateAccountHandlerCommand command, IHandlerAsync<CreateAccountHandlerCommand, AccountCredentials> handler, CancellationToken token) =>
+        api.MapPost("register", async (CreateAccountCommandHandler command, IHandlerAsync<CreateAccountCommandHandler, AccountCredentials> handler, CancellationToken token) =>
         {
-            
             var handleResult = await handler.HandleAsync(command, token);
             if (handleResult.IsSuccess)
             {
                 return Results.Ok();
             }
             return handleResult.ToMinimalApiResult();
-        }).AddEndpointFilter<ValidateCreateAccountFilter>().WithOpenApi(apiDescription =>
-        {
-            apiDescription.Description = "Endpoint de autenticación principalmente para el registro al servicio";
-            return apiDescription;
-        });
+        }).AddEndpointFilter<ValidateCreateAccountFilter>()
+        .ProducesProblem(StatusCodes.Status409Conflict)
+        .Produces<string>(StatusCodes.Status200OK)
+        .WithDisplayName("Register")
+        .WithDescription("Endpoint de registro del sitio")
+        .WithTags(["Authentication"])
+        .WithOpenApi();
     }
 }

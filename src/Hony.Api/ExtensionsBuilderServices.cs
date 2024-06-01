@@ -2,6 +2,8 @@ using Hony.Api.Endpoints;
 
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
+using Serilog;
+
 namespace Hony.Api;
 
 public static class ExtensionBuilderServices
@@ -26,5 +28,13 @@ public static class ExtensionBuilderServices
             endpoint.Map(app);
         }
         return app;
+    }
+    public static IServiceCollection AddSerilogConsole(this IServiceCollection services)
+    {
+        services.AddSerilog((sp, co) =>
+        {
+            co.WriteTo.Console();
+        });
+        return services;
     }
 }

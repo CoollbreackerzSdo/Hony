@@ -1,6 +1,8 @@
 ﻿using FluentValidation;
 
+using Hony.Application.Common.Models;
 using Hony.Application.Common.Validators;
+using Hony.Application.Services.Handlers;
 using Hony.Application.Services.Handlers.Create;
 
 using Microsoft.Extensions.DependencyInjection;
@@ -18,12 +20,13 @@ public static class ExtensionsBuilderServices
 
     private static IServiceCollection AddValidators(this IServiceCollection services)
     {
-        services.AddTransient<IValidator<CreateAccountHandlerCommand>,CreateAccountValidator>();
+        services.AddTransient<IValidator<CreateAccountHandlerCommand>, CreateAccountValidator>();
         return services;
     }
 
     private static IServiceCollection AddHandlers(this IServiceCollection services)
     {
+        services.AddTransient<IHandlerAsync<CreateAccountHandlerCommand, AccountCredentials>, CreateAccountHandler>();
         return services;
     }
 }

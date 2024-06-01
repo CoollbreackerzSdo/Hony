@@ -10,6 +10,9 @@ builder.Configuration.AddEnvConfigurations();
 builder.Services.AddEndpoints();
 builder.Services.AddInfrastructure();
 builder.Services.ApplicationServices();
+builder.Services.AddSerilogConsole();
+
+
 
 builder.Services.AddOpenApi();
 

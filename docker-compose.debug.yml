@@ -15,5 +15,5 @@ services:
       - ~/.vsdbg:/remote_debugger:rw
     develop:
       watch:
-        - path: src/
+        - path: .
           action: rebuild

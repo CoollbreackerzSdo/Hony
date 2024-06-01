@@ -4,7 +4,8 @@
     "Hony",
     "Mapperly",
     "Npgsql",
-    "Riok"
+    "Riok",
+    "Serilog"
   ],
   "cSpell.language": "en,es-ES"
 }

@@ -1,4 +1,5 @@
 using Hony.Api.Endpoints;
+using Hony.Api.Middlewares.Errors;
 
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
@@ -35,6 +36,11 @@ public static class ExtensionBuilderServices
         {
             co.WriteTo.Console();
         });
+        return services;
+    }
+    public static IServiceCollection AddMiddlewares(this IServiceCollection services)
+    {
+        services.AddExceptionHandler<GlobalErrorMiddleware>();
         return services;
     }
 }

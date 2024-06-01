@@ -11,22 +11,20 @@ builder.Services.AddEndpoints();
 builder.Services.AddInfrastructure();
 builder.Services.ApplicationServices();
 builder.Services.AddSerilogConsole();
-
-
-
 builder.Services.AddOpenApi();
+builder.Services.AddMiddlewares();
 
 var app = builder.Build();
 
-using var scopeContext = app.Services.CreateScope().ServiceProvider.GetRequiredService<HonyNpSqlContext>();
-scopeContext.Database.Migrate();
+// using var scopeContext = app.Services.CreateScope().ServiceProvider.GetRequiredService<HonyNpSqlContext>();
+// scopeContext.Database.Migrate();
 
 app.MapOpenApi();
 app.MapScalarApiReference();
 
 // Configure the HTTP request pipeline.
-
 app.UseHttpsRedirection();
-app.MapAppEndpoints();
+app.UseExceptionHandler();
 
+app.MapAppEndpoints();
 app.Run();

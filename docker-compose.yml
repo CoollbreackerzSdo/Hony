@@ -11,6 +11,7 @@ services:
     environment:
       - POST_CONNECTION=server=192.168.0.1;port=5432;user id=${PUSER};password=${PPASS};database=${PDATA};
       - MONG_CONNECTION=mongodb://${PUSER}:${PPASS}@192.168.0.3:27017
+      - JWT_KEY=${JTKEY}
     ports:
       - 8081:8081
       - 8080:8080

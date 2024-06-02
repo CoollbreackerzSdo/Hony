@@ -7,13 +7,13 @@ USER app
 FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:9.0-preview AS build
 ARG configuration=Release
 WORKDIR /src
-COPY ["src/Hony.Api/Hony.Api.csproj", "Hony.Api/"]
-COPY ["src/Hony.Application/Hony.Application.csproj", "Hony.Application/"]
-COPY ["src/Hony.Domain/Hony.Domain.csproj", "Hony.Domain/"]
-COPY ["src/Hony.Infrastructure/Hony.Infrastructure.csproj", "Hony.Infrastructure/"]
-RUN dotnet restore "Hony.Api/Hony.Api.csproj"
+COPY ["src/Hony.Api/Hony.Api.csproj", "src/Hony.Api/"]
+COPY ["src/Hony.Application/Hony.Application.csproj", "src/Hony.Application/"]
+COPY ["src/Hony.Domain/Hony.Domain.csproj", "src/Hony.Domain/"]
+COPY ["src/Hony.Infrastructure/Hony.Infrastructure.csproj", "src/Hony.Infrastructure/"]
+RUN dotnet restore "src/Hony.Api/Hony.Api.csproj"
 COPY . .
-WORKDIR "/src/Hony.Api"
+WORKDIR "/src/src/Hony.Api"
 RUN dotnet build "Hony.Api.csproj" -c $configuration -o /app/build
 
 FROM build AS publish

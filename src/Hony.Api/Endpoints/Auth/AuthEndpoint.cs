@@ -24,11 +24,13 @@ public class AuthEndpoint : IEndpoint
             }
             return handleResult.ToMinimalApiResult();
         }).AddEndpointFilter<ValidateCreateAccountFilter>()
+        .Accepts<CreateAccountCommandHandler>("application/json")
         .ProducesProblem(StatusCodes.Status409Conflict)
         .Produces<string>(StatusCodes.Status200OK)
         .WithDisplayName("Register")
         .WithDescription("Endpoint de registro del sitio")
         .WithTags(["Authentication"])
+        .HasApiVersion(1)
         .WithOpenApi();
     }
 }

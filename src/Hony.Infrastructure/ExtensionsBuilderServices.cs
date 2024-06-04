@@ -18,7 +18,7 @@ public static class ExtensionsBuilderServices
     /// <returns>La colección de servicios configurada.</returns>
     public static IServiceCollection AddInfrastructure(this IServiceCollection services)
     {
-        services.AddDbContext<HonyNpSqlContext>(config =>
+        services.AddDbContext<HonyAccountsNpSqlContext>(config =>
         {
             config.UseNpgsql(Environment.GetEnvironmentVariable("POST_CONNECTION"), b => b.MigrationsAssembly("Hony.Api"));
         });

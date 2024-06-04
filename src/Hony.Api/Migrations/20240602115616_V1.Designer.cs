@@ -11,7 +11,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Hony.Api.Migrations
 {
-    [DbContext(typeof(HonyNpSqlContext))]
+    [DbContext(typeof(HonyAccountsNpSqlContext))]
     [Migration("20240602115616_V1")]
     partial class V1
     {

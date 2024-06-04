@@ -1,4 +1,5 @@
 using Hony.Domain.Models.Account;
+using Hony.Domain.Models.Blogs;
 
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -29,5 +30,15 @@ public sealed class AccountConfiguration : EntityBaseConfiguration<AccountEntity
             navigation.Property(x => x.Email).HasColumnName("email").IsRequired().IsUnicode();
             navigation.Property(x => x.Password).HasColumnName("password").IsRequired();
         });
+        builder.HasMany(x => x.Blogs)
+            .WithOne()
+            .HasForeignKey(x => x.CreatorId)
+            .IsRequired()
+            .OnDelete(DeleteBehavior.ClientNoAction);
+        builder.HasMany(x => x.Comments)
+            .WithOne()
+            .HasForeignKey(x => x.CreatorId)
+            .IsRequired()
+            .OnDelete(DeleteBehavior.ClientNoAction);
     }
 }

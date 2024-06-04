@@ -20,7 +20,7 @@ internal class Repository<T> : IRepository<T>
     /// Inicializa una nueva instancia de la clase <see cref="Repository{T}"/>.
     /// </summary>
     /// <param name="context">El contexto de la base de datos utilizado por el repositorio.</param>
-    public Repository(HonyNpSqlContext context)
+    public Repository(HonyAccountsNpSqlContext context)
     {
         _context = context;
         _table = _context.Set<T>();
@@ -79,6 +79,6 @@ internal class Repository<T> : IRepository<T>
     public bool Any(Expression<Func<T, bool>> expression)
         => _table.Any(expression);
 
-    private readonly HonyNpSqlContext _context;
+    private readonly HonyAccountsNpSqlContext _context;
     private readonly DbSet<T> _table;
 }

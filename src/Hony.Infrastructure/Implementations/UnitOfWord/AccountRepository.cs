@@ -10,7 +10,7 @@ namespace Hony.Infrastructure.Implementations.UnitOfWord;
 /// Hereda de <see cref="Repository{T}"/> donde <c>T</c> es <see cref="AccountEntity"/>, e implementa <see cref="IAccountRepository"/>.
 /// </summary>
 /// <param name="context">El contexto de la base de datos utilizado por el repositorio.</param>
-internal class AccountRepository(HonyNpSqlContext context) : Repository<AccountEntity>(context), IAccountRepository
+internal class AccountRepository(HonyAccountsNpSqlContext context) : Repository<AccountEntity>(context), IAccountRepository
 {
 
 }

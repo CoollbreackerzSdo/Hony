@@ -11,7 +11,7 @@ internal class UnitOfWord : IUnitOfWord
     /// Inicializa una nueva instancia de la clase <see cref="UnitOfWord"/>.
     /// </summary>
     /// <param name="context">El contexto de la base de datos utilizado por la unidad de trabajo.</param>
-    public UnitOfWord(HonyNpSqlContext context)
+    public UnitOfWord(HonyAccountsNpSqlContext context)
     {
         _context = context;
         AccountRepository = new AccountRepository(_context);
@@ -50,7 +50,7 @@ internal class UnitOfWord : IUnitOfWord
     }
 
     private bool _disposedValue;
-    private readonly HonyNpSqlContext _context;
+    private readonly HonyAccountsNpSqlContext _context;
 
     /// <summary>
     /// Obtiene el repositorio de cuentas asociado con la unidad de trabajo.

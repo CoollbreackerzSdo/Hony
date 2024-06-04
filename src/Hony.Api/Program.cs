@@ -19,7 +19,7 @@ builder.Services.AddJwtServices();
 
 var app = builder.Build();
 
-using var scopeContext = app.Services.CreateScope().ServiceProvider.GetRequiredService<HonyNpSqlContext>();
+using var scopeContext = app.Services.CreateScope().ServiceProvider.GetRequiredService<HonyAccountsNpSqlContext>();
 scopeContext.Database.Migrate();
 // app.UseExceptionHandler();
 app.MapOpenApi();

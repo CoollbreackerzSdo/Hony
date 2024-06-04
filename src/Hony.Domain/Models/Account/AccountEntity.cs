@@ -1,4 +1,6 @@
 using Hony.Domain.Common;
+using Hony.Domain.Models.Blogs;
+using Hony.Domain.Models.Twits;
 
 namespace Hony.Domain.Models.Account;
 /// <summary>
@@ -20,4 +22,6 @@ public sealed class AccountEntity : EntityBase
     /// Representa los detalles opcionales de la cuenta. Este campo es obligatorio.
     /// </summary>
     public required AccountDetail Detail { get; init; }
+    public ICollection<BlogEntity>? Blogs { get; set; }
+    public ICollection<CommentEntity>? Comments { get; set; }
 }

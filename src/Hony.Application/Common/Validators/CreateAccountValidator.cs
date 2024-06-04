@@ -15,6 +15,9 @@ public class CreateAccountValidator : AbstractValidator<CreateAccountCommandHand
     /// </summary>
     public CreateAccountValidator()
     {
+        RuleFor(x => x.LastName).MaximumLength(100);
+        RuleFor(x => x.FirstName).MaximumLength(100);
+        RuleFor(x => x.UserName).NotEmpty().MinimumLength(8).MaximumLength(200);
         RuleFor(x => x.Email).EmailAddress();
         RuleFor(x => x.Password)
             .MinimumLength(8).Must(x => x.Any(char.IsNumber));

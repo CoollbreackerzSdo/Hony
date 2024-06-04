@@ -25,3 +25,4 @@ internal class CreateAccountHandler(IUnitOfWord word, IPasswordHasher<AccountEnt
         return AccountMapper.ToCredentials(user);
     }
 }
+public readonly record struct CreateAccountCommandHandler(string UserName, string Email, string Password, string? LastName = null, string? FirstName = null);

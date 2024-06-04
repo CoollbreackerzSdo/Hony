@@ -1,15 +1,14 @@
-# Please refer https://aka.ms/HTTPSinContainer on how to setup an https developer certificate for your ASP.NET Core service.
 name: hony
 
 services:
   honyapi:
-    image: honyapi
+    image: honyapi:v1
     container_name: honyapi-mix
     build:
       context: .
       dockerfile: src/Hony.Api/Dockerfile
     environment:
-      - POST_CONNECTION=server=192.168.0.1;port=5432;user id=${PUSER};password=${PPASS};database=${PDATA};
+      - POST_CONNECTION=server=192.168.0.2;port=5432;user id=${PUSER};password=${PPASS};database=${PDATA};
       - MONG_CONNECTION=mongodb://${PUSER}:${PPASS}@192.168.0.3:27017
       - JWT_KEY=${JTKEY}
     ports:
@@ -32,13 +31,24 @@ services:
       - POSTGRES_DB=${PDATA}
     expose:
       - 5432
-    ports:
-      - 7010:5432
     networks:
       hony:
         ipv4_address:  192.168.0.2
     volumes:
       - hony:/var/lib/postgres
+  honyapi.db.postgres.admin:
+    image: dpage/pgadmin4:latest
+    container_name: honyapi-postgres-admin
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=${ADMIN}
+      - PGADMIN_DEFAULT_PASSWORD=${ADPAS}
+    ports:
+      - 7009:80
+    networks:
+      hony:
+        ipv4_address:  192.168.0.4
+    depends_on:
+      - honyapi.db.service
   honyapi.db.tokens:
     image: mongo
     container_name: honyapi-mongo

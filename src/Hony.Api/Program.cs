@@ -15,8 +15,10 @@ builder.Services.AddOpenApi();
 builder.Services.AddApiVersioning();
 builder.Services.AddMiddlewares();
 builder.Services.AddAuthenticationConfiguration();
+builder.Services.AddJwtServices();
 
 var app = builder.Build();
+
 using var scopeContext = app.Services.CreateScope().ServiceProvider.GetRequiredService<HonyNpSqlContext>();
 scopeContext.Database.Migrate();
 // app.UseExceptionHandler();
@@ -28,5 +30,7 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapMiddlewares();
+
 app.MapAppEndpoints();
+
 app.Run();

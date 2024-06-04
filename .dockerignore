@@ -1,4 +1,3 @@
-
 # Created by https://www.gitignore.io/api/csharp
 
 ### Csharp ###
@@ -257,7 +256,10 @@ Keys
 # Paket dependency manager
 .paket/paket.exe
 paket-files/
-
+test/
+docs/
+test/
+.vscode
 # FAKE - F# Make
 .fake/
 

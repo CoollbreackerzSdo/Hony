@@ -1,9 +1,15 @@
+using System.Text;
+
 using Hony.Api.Endpoints;
 using Hony.Api.Middlewares.Errors;
-using Hony.Api.Services.Authentication.Tokens;
+using Hony.Api.Services.Authentication.Jwt;
+using Hony.Api.Services.Authentication.Providers;
+using Hony.Api.Services.Contexts;
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 
 using Serilog;
 
@@ -13,17 +19,36 @@ public static class ExtensionBuilderServices
 {
     public static IServiceCollection AddAuthenticationConfiguration(this IServiceCollection services)
     {
-        services.AddSingleton<JwtSettings>(_ => new()
-        {
-            Key = Environment.GetEnvironmentVariable("JWT_KEY")!,
-        });
         services.AddAuthentication(config =>
         {
             config.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
             config.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             config.DefaultForbidScheme = JwtBearerDefaults.AuthenticationScheme;
+        }).AddJwtBearer(config =>
+        {
+            config.TokenValidationParameters = new()
+            {
+                ValidateActor = false,
+                ValidateIssuer = false,
+                ValidateLifetime = true,
+                ValidateAudience = false,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("JWT_KEY")!))
+            };
         });
-        services.AddAuthorizationBuilder();
+        services.AddAuthorizationBuilder()
+            .AddPolicy(PoliciesProviderDefault.USER_VALORICE, config
+                => config.AddAuthenticationSchemes([JwtBearerDefaults.AuthenticationScheme]).RequireRole([RolesProviderDefault.USER]).RequireAuthenticatedUser());
+        return services;
+    }
+    public static IServiceCollection AddJwtServices(this IServiceCollection services)
+    {
+        services.AddSingleton<IOptions<JwtSettings>>(_ => Options.Create<JwtSettings>(new()
+        {
+            Key = Environment.GetEnvironmentVariable("JWT_KEY")!
+        }));
+        services.AddTransient<IJwtServices, JwtServicesDefault>();
+        services.AddSingleton<IMongoClient, MongoClient>(_ => new MongoClient(Environment.GetEnvironmentVariable("MONG_CONNECTION")));
+        services.AddTransient<IJwtManager, JwtMongoManager>();
         return services;
     }
     public static IConfigurationBuilder AddEnvConfigurations(this ConfigurationManager builder)

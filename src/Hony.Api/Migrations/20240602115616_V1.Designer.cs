@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Hony.Api.Migrations
 {
     [DbContext(typeof(HonyNpSqlContext))]
-    [Migration("20240531131100_V1")]
+    [Migration("20240602115616_V1")]
     partial class V1
     {
         /// <inheritdoc />

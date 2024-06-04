@@ -27,7 +27,7 @@ internal class Repository<T> : IRepository<T>
         => _table.Where(x => x.Id == key).ExecuteDelete() > 0;
     public bool ExecuteDisable(EntityKey<Guid> key)
         => _table.Where(x => x.Id == key).ExecuteUpdate(setter => setter.SetProperty(prop => prop.IsActive, false)) > 0;
-    public bool Any(Expression<Func<T, bool>> expression) 
+    public bool Any(Expression<Func<T, bool>> expression)
         => _table.Any(expression);
     private readonly HonyNpSqlContext _context;
     private readonly DbSet<T> _table;

@@ -12,7 +12,9 @@ builder.Services.AddInfrastructure();
 builder.Services.ApplicationServices();
 builder.Services.AddSerilogConsole();
 builder.Services.AddOpenApi();
+builder.Services.AddApiVersioning();
 builder.Services.AddMiddlewares();
+builder.Services.AddAuthenticationConfiguration();
 
 var app = builder.Build();
 using var scopeContext = app.Services.CreateScope().ServiceProvider.GetRequiredService<HonyNpSqlContext>();
@@ -23,6 +25,8 @@ app.MapScalarApiReference();
 // Configure the HTTP request pipeline.
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
+app.UseAuthorization();
 app.MapMiddlewares();
 app.MapAppEndpoints();
 app.Run();

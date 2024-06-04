@@ -1,5 +1,7 @@
 using Ardalis.Result.AspNetCore;
 
+using Asp.Versioning.Builder;
+
 using Hony.Api.Endpoints.Filters.Validation;
 using Hony.Api.Models;
 using Hony.Api.Models.Token;
@@ -18,7 +20,7 @@ public class AuthEndpoint : IEndpoint
     {
         var api = builder.MapGroup("auth");
 
-        api.MapPost("register", async (CreateAccountCommandHandler command, IJwtManager jwtManager, IJwtServices jwtServices, IHandlerAsync<CreateAccountCommandHandler, AccountCredentials> handler, CancellationToken token) =>
+        api.MapPost("v1/register", async (CreateAccountCommandHandler command, IJwtManager jwtManager, IJwtServices jwtServices, IHandlerAsync<CreateAccountCommandHandler, AccountCredentials> handler, CancellationToken token) =>
         {
             Result<AccountCredentials>? handleResult = await handler.HandleAsync(command, token);
             if (handleResult.IsSuccess)
@@ -35,10 +37,9 @@ public class AuthEndpoint : IEndpoint
         .WithName("Register")
         .WithDescription("Endpoint de registro del sitio")
         .WithTags(["Authentication"])
-        .HasApiVersion(1)
         .WithOpenApi();
 
-        api.MapPost("login", async (ValidateAccountCommandHandler command, IJwtManager jwtManager, IJwtServices jwtServices, IHandler<ValidateAccountCommandHandler, AccountCredentials> handler, CancellationToken token) =>
+        api.MapPost("v1/login", async (ValidateAccountCommandHandler command, IJwtManager jwtManager, IJwtServices jwtServices, IHandler<ValidateAccountCommandHandler, AccountCredentials> handler, CancellationToken token) =>
         {
             var handleResult = handler.Handle(command);
             if (handleResult.IsSuccess)
@@ -55,7 +56,6 @@ public class AuthEndpoint : IEndpoint
         .WithName("Login")
         .WithDescription("Endpoint de login del sitio")
         .WithTags(["Authentication"])
-        .HasApiVersion(1)
         .WithOpenApi();
     }
 }

@@ -7,6 +7,7 @@ services:
     build:
       context: .
       dockerfile: src/Hony.Api/Dockerfile
+    restart: always
     environment:
       - POST_CONNECTION=server=192.168.0.2;port=5432;user id=${PUSER};password=${PPASS};database=${PDATA};
       - MONG_CONNECTION=mongodb://${PUSER}:${PPASS}@192.168.0.3:27017

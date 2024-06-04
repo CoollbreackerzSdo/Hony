@@ -42,13 +42,14 @@ public static class ExtensionBuilderServices
     }
     public static IServiceCollection AddJwtServices(this IServiceCollection services)
     {
-        services.AddSingleton<IOptions<JwtSettings>>(_ => Options.Create<JwtSettings>(new()
+        services.AddTransient(_ => Options.Create<JwtSettings>(new()
         {
             Key = Environment.GetEnvironmentVariable("JWT_KEY")!
         }));
-        services.AddTransient<IJwtServices, JwtServicesDefault>();
         services.AddSingleton<IMongoClient, MongoClient>(_ => new MongoClient(Environment.GetEnvironmentVariable("MONG_CONNECTION")));
-        services.AddTransient<IJwtManager, JwtMongoManager>();
+        services.AddScoped<TokenMongoContext>();
+        services.AddScoped<IJwtManager, JwtMongoManager>();
+        services.AddTransient<IJwtServices, JwtServicesDefault>();
         return services;
     }
     public static IConfigurationBuilder AddEnvConfigurations(this ConfigurationManager builder)

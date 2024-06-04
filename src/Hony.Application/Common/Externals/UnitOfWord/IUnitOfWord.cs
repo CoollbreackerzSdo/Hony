@@ -14,7 +14,17 @@ public interface IUnitOfWord : IDisposable
     Task SaveChangesAsync(CancellationToken token = default);
 
     /// <summary>
-    /// Obtiene el repositorio de cuentas asociado a esta unidad de trabajo.
+    /// Obtiene el repositorio de cuentas.
     /// </summary>
     IAccountRepository AccountRepository { get; }
+
+    /// <summary>
+    /// Obtiene el repositorio de comentarios.
+    /// </summary>
+    ICommentRepository CommentRepository { get; }
+
+    /// <summary>
+    /// Obtiene el repositorio de blogs.
+    /// </summary>
+    IBlogRepository BlogRepository { get; }
 }

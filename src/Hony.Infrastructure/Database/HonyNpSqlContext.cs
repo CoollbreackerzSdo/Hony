@@ -26,6 +26,13 @@ public sealed class HonyAccountsNpSqlContext(DbContextOptions options) : DbConte
     /// Obtiene o establece el conjunto de entidades de cuentas en el contexto de la base de datos.
     /// </summary>
     public DbSet<AccountEntity> Accounts { get; init; } = null!;
+    /// <summary>
+    /// Conjunto de entidades de tipo <see cref="BlogEntity"/> en el contexto de la base de datos.
+    /// </summary>
     public DbSet<BlogEntity> Blogs { get; init; } = null!;
+
+    /// <summary>
+    /// Conjunto de entidades de tipo <see cref="CommentEntity"/> en el contexto de la base de datos.
+    /// </summary>
     public DbSet<CommentEntity> Comments { get; init; } = null!;
 }

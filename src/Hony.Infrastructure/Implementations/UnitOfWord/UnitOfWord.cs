@@ -15,8 +15,9 @@ internal class UnitOfWord : IUnitOfWord
     {
         _context = context;
         AccountRepository = new AccountRepository(_context);
+        CommentRepository = new CommentRepository(_context);
+        BlogRepository = new BlogRepository(_context);
     }
-
     /// <summary>
     /// Guarda todos los cambios realizados en la base de datos asincrónicamente.
     /// </summary>
@@ -24,7 +25,6 @@ internal class UnitOfWord : IUnitOfWord
     /// <returns>Una tarea que representa la operación asincrónica.</returns>
     public async Task SaveChangesAsync(CancellationToken token = default)
         => await _context.SaveChangesAsync(token);
-
     /// <summary>
     /// Libera los recursos no administrados utilizados por la unidad de trabajo.
     /// </summary>
@@ -39,7 +39,6 @@ internal class UnitOfWord : IUnitOfWord
             _disposedValue = true;
         }
     }
-
     /// <summary>
     /// Libera los recursos no administrados utilizados por la unidad de trabajo.
     /// </summary>
@@ -48,12 +47,17 @@ internal class UnitOfWord : IUnitOfWord
         Dispose(disposing: true);
         GC.SuppressFinalize(this);
     }
-
     private bool _disposedValue;
     private readonly HonyAccountsNpSqlContext _context;
-
     /// <summary>
     /// Obtiene el repositorio de cuentas asociado con la unidad de trabajo.
     /// </summary>
     public IAccountRepository AccountRepository { get; }
+    /// <summary>
+    /// Obtiene el repositorio de comentarios.
+    /// </summary>
+    public ICommentRepository CommentRepository { get; }/// <summary>
+                                                        /// Obtiene el repositorio de blogs.
+                                                        /// </summary>
+    public IBlogRepository BlogRepository { get; }
 }

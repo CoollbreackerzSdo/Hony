@@ -8,8 +8,16 @@ using Microsoft.AspNetCore.Identity;
 namespace Hony.Application.Services.Handlers.Validation;
 
 
-public class ValidateAccountHandler(IUnitOfWord word, IPasswordHasher<AccountEntity> hasher) : IHandler<ValidateAccountCommandHandler, AccountCredentials>
+/// <summary>
+/// Clase sellada interna que maneja el comando de validación de cuenta <see cref="ValidateAccountCommandHandler"/>.
+/// </summary>
+internal sealed class ValidateAccountHandler(IUnitOfWord word, IPasswordHasher<AccountEntity> hasher) : IHandler<ValidateAccountCommandHandler, AccountCredentials>
 {
+    /// <summary>
+    /// Maneja el comando de validación de cuenta.
+    /// </summary>
+    /// <param name="command">El comando de validación de cuenta a manejar.</param>
+    /// <returns>Un resultado que contiene las credenciales de la cuenta validada si la validación es exitosa.</returns>
     [TranslateResultToActionResult]
     public Result<AccountCredentials> Handle(ValidateAccountCommandHandler command)
     {
@@ -23,4 +31,8 @@ public class ValidateAccountHandler(IUnitOfWord word, IPasswordHasher<AccountEnt
             none: () => Result.NotFound());
     }
 }
+
+/// <summary>
+/// Registro de estructura que representa el comando de validación de cuenta.
+/// </summary>
 public readonly record struct ValidateAccountCommandHandler(string UserName, string Password);

@@ -9,9 +9,15 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Hony.Api.Services.Authentication.Jwt;
-
+/// <summary>
+/// Inicializa una nueva instancia de la clase <see cref="JwtServicesDefault"/>.
+/// Clase que implementa la interfaz <see cref="IJwtServices"/> y proporciona métodos para la creación de tokens JWT.
+/// Utiliza la configuración de JWT proporcionada por <see cref="JwtSettings"/>.
+/// </summary>
+/// <param name="settings">La configuración de JWT.</param>
 public sealed class JwtServicesDefault(IOptions<JwtSettings> settings) : IJwtServices
 {
+    /// <inheritdoc/>
     public async Task<TokenEntity> CreateTokenAsync(AccountCredentials credentials, string role, CancellationToken token)
     {
         Claim[] claims = [
@@ -42,10 +48,22 @@ public sealed class JwtServicesDefault(IOptions<JwtSettings> settings) : IJwtSer
         return Task.FromResult(new JwtSecurityTokenHandler().WriteToken(token));
     }
     private readonly JwtSettings _settings = settings.Value;
+    /// <summary>
+    /// Enumeración interna que representa el tipo de token.
+    /// </summary>
     internal enum TokenType
     {
+        /// <summary>
+        /// Sin tipo de token.
+        /// </summary>
         None,
+        /// <summary>
+        /// Token normal.
+        /// </summary>
         Normal,
+        /// <summary>
+        /// Token de actualización.
+        /// </summary>
         Refresh
     }
 }

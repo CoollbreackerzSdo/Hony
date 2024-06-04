@@ -4,8 +4,15 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Hony.Infrastructure.Database.Configurations;
 
+/// <summary>
+/// Clase que configura el mapeo de la entidad <see cref="AccountEntity"/> en la base de datos.
+/// </summary>
 public sealed class AccountConfiguration : EntityBaseConfiguration<AccountEntity>
 {
+    /// <summary>
+    /// Configura el mapeo de la entidad <see cref="AccountEntity"/> en la base de datos.
+    /// </summary>
+    /// <param name="builder">El constructor de entidades utilizado para configurar el mapeo.</param>
     public override void Configure(EntityTypeBuilder<AccountEntity> builder)
     {
         base.Configure(builder);
@@ -14,7 +21,7 @@ public sealed class AccountConfiguration : EntityBaseConfiguration<AccountEntity
         builder.OwnsOne(x => x.Detail, navigation =>
         {
             navigation.ToJson();
-            navigation.Property(x => x.LastName).HasColumnName("first_name").HasMaxLength(100);
+            navigation.Property(x => x.LastName).HasColumnName("last_name").HasMaxLength(100);
             navigation.Property(x => x.FirstName).HasColumnName("first_name").HasMaxLength(100);
         });
         builder.OwnsOne(x => x.Security, navigation =>

@@ -3,8 +3,6 @@ using System.Linq.Expressions;
 using Hony.Api.Models.Token;
 using Hony.Api.Services.Contexts;
 
-using Optional;
-
 namespace Hony.Api.Services.Authentication.Jwt;
 /// <summary>
 /// Clase que implementa la interfaz <see cref="IJwtManager"/> y proporciona métodos para la gestión de tokens JWT utilizando MongoDB como almacenamiento.
@@ -31,4 +29,10 @@ public sealed class JwtMongoManager(TokenMongoContext context) : IJwtManager
                 some: x => Result.Success(x > DateTime.UtcNow),
                 none: () => Result.NotFound()
             );
+    /// <inheritdoc/>
+    public void Delete(Expression<Func<TokenEntity, bool>> filter)
+        => context.Tokens.DeleteOne(filter);
+    /// <inheritdoc/>
+    public void DeleteAll(Expression<Func<TokenEntity, bool>> filter)
+        => context.Tokens.DeleteMany(filter);
 }

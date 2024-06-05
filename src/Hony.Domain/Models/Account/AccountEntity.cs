@@ -22,6 +22,13 @@ public sealed class AccountEntity : EntityBase
     /// Representa los detalles opcionales de la cuenta. Este campo es obligatorio.
     /// </summary>
     public required AccountDetail Detail { get; init; }
+    /// <summary>
+    /// Obtiene o establece la colección de entidades <see cref="BlogEntity"/> asociadas.
+    /// </summary>
     public ICollection<BlogEntity>? Blogs { get; set; }
+
+    /// <summary>
+    /// Obtiene o establece la colección de entidades <see cref="CommentEntity"/> asociadas.
+    /// </summary>
     public ICollection<CommentEntity>? Comments { get; set; }
 }

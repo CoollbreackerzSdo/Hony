@@ -1,7 +1,6 @@
+using System.Security.Claims;
+
 using Ardalis.Result.AspNetCore;
-
-using Asp.Versioning.Builder;
-
 using Hony.Api.Endpoints.Filters.Validation;
 using Hony.Api.Models;
 using Hony.Api.Models.Token;
@@ -20,9 +19,9 @@ public class AuthEndpoint : IEndpoint
     {
         var api = builder.MapGroup("auth");
 
-        api.MapPost("v1/register", async (CreateAccountCommandHandler command, IJwtManager jwtManager, IJwtServices jwtServices, IHandlerAsync<CreateAccountCommandHandler, AccountCredentials> handler, CancellationToken token) =>
+        api.MapPost("v1/sign-up", async (CreateAccountCommandHandler command,IJwtManager jwtManager, IJwtServices jwtServices,IHandlerAsync<AccountCredentials,TokenTransport> jwtHandler, IHandlerAsync<CreateAccountCommandHandler, AccountCredentials> handler, CancellationToken token) =>
         {
-            Result<AccountCredentials>? handleResult = await handler.HandleAsync(command, token);
+            Result<AccountCredentials> handleResult = await handler.HandleAsync(command, token);
             if (handleResult.IsSuccess)
             {
                 TokenEntity jwt = await jwtServices.CreateTokenAsync(handleResult.Value, RolesProviderDefault.USER, token);
@@ -39,9 +38,9 @@ public class AuthEndpoint : IEndpoint
         .WithTags(["Authentication"])
         .WithOpenApi();
 
-        api.MapPost("v1/login", async (ValidateAccountCommandHandler command, IJwtManager jwtManager, IJwtServices jwtServices, IHandler<ValidateAccountCommandHandler, AccountCredentials> handler, CancellationToken token) =>
+        api.MapPost("v1/sign-in", async (ValidateAccountCommandHandler command, IJwtManager jwtManager, IJwtServices jwtServices, IHandler<ValidateAccountCommandHandler, AccountCredentials> handler, CancellationToken token) =>
         {
-            var handleResult = handler.Handle(command);
+            Result<AccountCredentials> handleResult = handler.Handle(command);
             if (handleResult.IsSuccess)
             {
                 TokenEntity jwt = await jwtServices.CreateTokenAsync(handleResult.Value, RolesProviderDefault.USER, token);
@@ -57,5 +56,25 @@ public class AuthEndpoint : IEndpoint
         .WithDescription("Endpoint de login del sitio")
         .WithTags(["Authentication"])
         .WithOpenApi();
+
+        api.MapGet("v1/sign-out", (ClaimsPrincipal userClaims,IJwtManager jwtManager) =>
+        {
+            var idClaim = userClaims.FindFirstValue(ClaimTypes.NameIdentifier);
+            if(string.IsNullOrWhiteSpace(idClaim)) return Results.NotFound();
+
+            var id = Guid.Parse(idClaim);
+            jwtManager.Delete(x => x.AccountId == id);
+            return Results.Ok();
+        }).RequireAuthorization([PoliciesProviderDefault.USER_VALORICE]);
+
+        api.MapGet("v1/sign-out-all", (ClaimsPrincipal userClaims,IJwtManager jwtManager) =>
+        {
+            var idClaim = userClaims.FindFirstValue(ClaimTypes.NameIdentifier);
+            if(string.IsNullOrWhiteSpace(idClaim)) return Results.NotFound();
+
+            var id = Guid.Parse(idClaim);
+            jwtManager.Delete(x => x.AccountId == id);
+            return Results.Ok();
+        }).RequireAuthorization([PoliciesProviderDefault.USER_VALORICE]);
     }
 }

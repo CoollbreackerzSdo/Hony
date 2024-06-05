@@ -32,4 +32,15 @@ public interface IJwtManager
     /// <param name="filter">La condición para seleccionar la entidad de token.</param>
     /// <returns>Un resultado que indica si algún token seleccionado ha expirado.</returns>
     Result<bool> IsExpired(Expression<Func<TokenEntity, bool>> filter);
+    /// <summary>
+    /// Elimina una entidad <see cref="TokenEntity"/> que cumpla con el filtro especificado.
+    /// </summary>
+    /// <param name="filter">Expresión lambda utilizada para filtrar la entidad a eliminar.</param>
+    void Delete(Expression<Func<TokenEntity, bool>> filter);
+
+    /// <summary>
+    /// Elimina todas las entidades <see cref="TokenEntity"/> que cumplan con el filtro especificado.
+    /// </summary>
+    /// <param name="filter">Expresión lambda utilizada para filtrar las entidades a eliminar.</param>
+    void DeleteAll(Expression<Func<TokenEntity, bool>> filter);
 }

@@ -26,7 +26,7 @@ public sealed class JwtMongoManager(TokenMongoContext context) : IJwtManager
     public Result<bool> IsExpired(Expression<Func<TokenEntity, bool>> filter)
         => SelectAsOptionResult(filter, x => x.ExpirationToken)
             .Match(
-                some: x => Result.Success(x > DateTime.UtcNow),
+                some: x => Result.Success(x < DateTime.UtcNow),
                 none: () => Result.NotFound()
             );
     /// <inheritdoc/>

@@ -19,7 +19,7 @@ public class AuthEndpoint : IEndpoint
     {
         var api = builder.MapGroup("auth");
 
-        api.MapPost("v1/sign-up", async (CreateAccountCommandHandler command,IJwtManager jwtManager, IJwtServices jwtServices,IHandlerAsync<AccountCredentials,TokenTransport> jwtHandler, IHandlerAsync<CreateAccountCommandHandler, AccountCredentials> handler, CancellationToken token) =>
+        api.MapPost("v1/sign-up", async (CreateAccountCommandHandler command,IJwtManager jwtManager, IJwtServices jwtServices,IHandlerAsync<CreateAccountCommandHandler, AccountCredentials> handler, CancellationToken token) =>
         {
             Result<AccountCredentials> handleResult = await handler.HandleAsync(command, token);
             if (handleResult.IsSuccess)
@@ -33,7 +33,6 @@ public class AuthEndpoint : IEndpoint
         .Accepts<CreateAccountCommandHandler>("application/json")
         .ProducesProblem(StatusCodes.Status409Conflict)
         .Produces<string>(StatusCodes.Status200OK)
-        .WithName("Register")
         .WithDescription("Endpoint de registro del sitio")
         .WithTags(["Authentication"])
         .WithOpenApi();
@@ -52,7 +51,6 @@ public class AuthEndpoint : IEndpoint
         .ProducesProblem(StatusCodes.Status400BadRequest)
         .ProducesProblem(StatusCodes.Status404NotFound)
         .Produces<string>(StatusCodes.Status200OK)
-        .WithName("Login")
         .WithDescription("Endpoint de login del sitio")
         .WithTags(["Authentication"])
         .WithOpenApi();
@@ -65,7 +63,12 @@ public class AuthEndpoint : IEndpoint
             var id = Guid.Parse(idClaim);
             jwtManager.Delete(x => x.AccountId == id);
             return Results.Ok();
-        }).RequireAuthorization([PoliciesProviderDefault.USER_VALORICE]);
+        }).RequireAuthorization([PoliciesProviderDefault.USER_VALORICE])
+        .WithDescription("Endpoint de cerrar sesión en el token utilizado para esta solicitud")
+        .WithTags(["Authentication"])
+        .ProducesProblem(StatusCodes.Status203NonAuthoritative)
+        .Produces<string>(StatusCodes.Status200OK)
+        .WithOpenApi();
 
         api.MapGet("v1/sign-out-all", (ClaimsPrincipal userClaims,IJwtManager jwtManager) =>
         {
@@ -75,6 +78,11 @@ public class AuthEndpoint : IEndpoint
             var id = Guid.Parse(idClaim);
             jwtManager.Delete(x => x.AccountId == id);
             return Results.Ok();
-        }).RequireAuthorization([PoliciesProviderDefault.USER_VALORICE]);
+        }).RequireAuthorization([PoliciesProviderDefault.USER_VALORICE])
+        .WithDescription("Endpoint de cerrar sesión en todos los tokens activos")
+        .WithTags(["Authentication"])
+        .ProducesProblem(StatusCodes.Status203NonAuthoritative)
+        .Produces<string>(StatusCodes.Status200OK)
+        .WithOpenApi();
     }
 }

@@ -9,20 +9,31 @@ services:
       dockerfile: src/Hony.Api/Dockerfile
     restart: always
     environment:
-      - POST_CONNECTION=server=192.168.0.2;port=5432;user id=${PUSER};password=${PPASS};database=${PDATA};
-      - MONG_CONNECTION=mongodb://${PUSER}:${PPASS}@192.168.0.3:27017
+      - POST_CONNECTION=server=192.168.0.3;port=5432;user id=${PUSER};password=${PPASS};database=${PDATA};
+      - MONG_CONNECTION=mongodb://${PUSER}:${PPASS}@192.168.0.5:27017
       - JWT_KEY=${JTKEY}
     ports:
-      - 8081:8081
-      - 8080:8080
+      - 7005:7005
     networks:
       hony:
-        ipv4_address:  192.168.0.10
-    volumes:
-      - hony:/app
+        ipv4_address:  192.168.0.1
     depends_on:
       - honyapi.db.service
       - honyapi.db.tokens
+  honyweb:
+    container_name: honyweb-mix
+    image: honyweb:v1
+    build:
+      context: .
+      dockerfile: src/Hony.Web/Dockerfile
+    restart: always
+    ports:
+      - 7007:7007
+    networks:
+      hony:
+        ipv4_address:  192.168.0.2
+    depends_on:
+      - honyapi
   honyapi.db.service:
     image: postgres
     container_name: honyapi-postgres
@@ -32,9 +43,11 @@ services:
       - POSTGRES_DB=${PDATA}
     expose:
       - 5432
+    ports:
+      - 7008:5432
     networks:
       hony:
-        ipv4_address:  192.168.0.2
+        ipv4_address:  192.168.0.3
     volumes:
       - hony:/var/lib/postgres
   honyapi.db.postgres.admin:
@@ -59,10 +72,10 @@ services:
     expose:
       - 27017
     ports:
-      - 7011:27017
+      - 7010:27017
     networks:
       hony:
-        ipv4_address:  192.168.0.3
+        ipv4_address:  192.168.0.5
     volumes:
       - hony:/data/db
 volumes:
@@ -74,4 +87,4 @@ networks:
     ipam:
       config:
         - subnet: 192.168.0.0/20
-          gateway: 192.168.0.1
+          gateway: 192.168.0.20

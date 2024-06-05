@@ -25,6 +25,12 @@ public sealed class BlogConfiguration : EntityBaseConfiguration<BlogEntity>
             .HasMaxLength(1_000)
             .HasColumnName("name");
 
+        // Configuración de la propiedad Content
+        builder.Property(x => x.Content)
+            .IsRequired()
+            .HasMaxLength(2_000)
+            .HasColumnName("content");
+
         // Configuración de la propiedad CreatorId
         builder.Property(x => x.CreatorId)
             .IsRequired();

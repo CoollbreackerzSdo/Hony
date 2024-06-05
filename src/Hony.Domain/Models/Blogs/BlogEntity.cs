@@ -17,6 +17,10 @@ public class BlogEntity : EntityBase
     /// Obtiene o establece el nombre del blog.
     /// </summary>
     public required string Name { get; set; }
+    /// <summary>
+    /// Obtiene o establece el contenido del blog.
+    /// </summary>
+    public required string Content { get; set; }
 
     /// <summary>
     /// Obtiene o establece los detalles adicionales del blog.

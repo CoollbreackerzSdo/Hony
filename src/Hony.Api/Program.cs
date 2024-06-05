@@ -12,7 +12,6 @@ builder.Services.AddInfrastructure();
 builder.Services.ApplicationServices();
 builder.Services.AddSerilogConsole();
 builder.Services.AddOpenApi();
-builder.Services.AddApiVersioning();
 builder.Services.AddMiddlewares();
 builder.Services.AddAuthenticationConfiguration();
 builder.Services.AddJwtServices();

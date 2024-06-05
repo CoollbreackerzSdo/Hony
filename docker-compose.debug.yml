@@ -2,7 +2,7 @@ name: hony
 
 services:
   honyapi:
-    image: honyapi
+    image: honyapi:v1
     build:
       context: .
       dockerfile: src/Hony.Api/Dockerfile
@@ -12,11 +12,38 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_Kestrel__Certificates__Default__Password=honymon
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/hony.pfx
-      - ASPNETCORE_URLS=https://+:8080;http://+:8081
+      - ASPNETCORE_URLS=https://+:7004;http://+:7005
+    ports:
+      - 7004:7004
     volumes:
       - ~/.vsdbg:/remote_debugger:rw
       - ~/.aspnet/https:/https:ro
     develop:
       watch:
-        - path: src/
+        - path: src/Hony.Api/
+          action: rebuild
+        - path: src/Hony.Application
+          action: rebuild
+        - path: src/Hony.Infrastructure/
+          action: rebuild
+        - path: src/Hony.Domain/
+          action: rebuild
+  honyweb:
+    image: honyweb:v1
+    build:
+      context: .
+      dockerfile: src/Hony.Web/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=honymon
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/hony.pfx
+      - ASPNETCORE_URLS=https://+:7006;http://+:7007
+    ports:
+      - 7006:7006
+    volumes:
+      - ~/.vsdbg:/remote_debugger:rw
+      - ~/.aspnet/https:/https:ro
+    develop:
+      watch:
+        - path: src/Hony.Web/
           action: rebuild

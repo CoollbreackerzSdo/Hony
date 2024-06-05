@@ -34,6 +34,10 @@ public static class ExtensionBuilderServices
                 ValidateAudience = false,
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("JWT_KEY")!))
             };
+            config.Events = new()
+            {
+                OnMessageReceived = Middlewares.Events.JwtEvents.MessageReceivedToken
+            };
         });
         services.AddAuthorizationBuilder()
             .AddPolicy(PoliciesProviderDefault.USER_VALORICE, config

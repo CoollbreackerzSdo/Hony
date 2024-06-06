@@ -61,6 +61,7 @@ public static class ExtensionsBuilderServices
     public static IServiceCollection AddHashes(this IServiceCollection services)
     {
         services.AddTransient<IPasswordHasher<AccountEntity>, PasswordHasher<AccountEntity>>();
+        services.AddTransient<IHandlerAsync<(Guid, CreateBlogCommandHandler), BlogView>, CreateBlogHandler>();
         return services;
     }
 }

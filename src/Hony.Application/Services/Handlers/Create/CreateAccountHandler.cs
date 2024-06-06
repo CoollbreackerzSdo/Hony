@@ -26,7 +26,7 @@ internal sealed class CreateAccountHandler(IUnitOfWord word, IPasswordHasher<Acc
         else if (word.AccountRepository.Any(x => x.Security.Email == request.Email))
             return Result.Conflict("Email ya registrado");
 
-        var user = AccountMapper.ToAccount(request);
+        var user = AccountMapper.Map(request);
         user.Security.Password = hasher.HashPassword(user, user.Security.Password);
         word.AccountRepository.Add(user);
         await word.SaveChangesAsync(token);

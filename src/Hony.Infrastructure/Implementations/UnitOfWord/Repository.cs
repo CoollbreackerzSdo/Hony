@@ -78,7 +78,16 @@ internal class Repository<T> : IRepository<T>
     /// <returns><c>true</c> si alguna entidad satisface la condición; de lo contrario, <c>false</c>.</returns>
     public bool Any(Expression<Func<T, bool>> expression)
         => _table.Any(expression);
-
+    /// <summary>
+    /// Agrega una nueva entidad a la base de datos y devuelve la entidad agregada.
+    /// </summary>
+    /// <param name="model">La entidad a agregar.</param>
+    /// <returns>La entidad agregada.</returns>
+    public T AddTrack(T model)
+    {
+        _table.Add(model);
+        return model;
+    }
     private readonly HonyAccountsNpSqlContext _context;
     private readonly DbSet<T> _table;
 }

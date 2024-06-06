@@ -49,20 +49,7 @@ services:
       hony:
         ipv4_address:  192.168.0.3
     volumes:
-      - hony:/var/lib/postgres
-  honyapi.db.postgres.admin:
-    image: dpage/pgadmin4:latest
-    container_name: honyapi-postgres-admin
-    environment:
-      - PGADMIN_DEFAULT_EMAIL=${ADMIN}
-      - PGADMIN_DEFAULT_PASSWORD=${ADPAS}
-    ports:
-      - 7009:80
-    networks:
-      hony:
-        ipv4_address:  192.168.0.4
-    depends_on:
-      - honyapi.db.service
+      - hony:/var/lib/postgresy
   honyapi.db.tokens:
     image: mongo
     container_name: honyapi-mongo

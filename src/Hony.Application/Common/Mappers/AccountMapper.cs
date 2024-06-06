@@ -16,7 +16,7 @@ internal static partial class AccountMapper
     /// </summary>
     /// <param name="command">El comando de creación de cuenta.</param>
     /// <returns>Una nueva instancia de <see cref="AccountEntity"/> que representa la cuenta creada.</returns>
-    public static AccountEntity ToAccount(CreateAccountCommandHandler command)
+    public static AccountEntity Map(CreateAccountCommandHandler command)
         => new()
         {
             UserName = command.UserName,

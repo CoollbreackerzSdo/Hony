@@ -46,7 +46,11 @@ public class AuthEndpoint : IEndpoint
                 jwtManager.Add(jwt);
                 return Results.Ok(jwt.ToTransport());
             }
-            return handleResult.ToMinimalApiResult();
+            return handleResult.Status switch
+            {
+                ResultStatus.Invalid => Results.BadRequest(),
+                _ => handleResult.ToMinimalApiResult()
+            };
         }).Accepts<ValidateAccountCommandHandler>("application/json")
         .ProducesProblem(StatusCodes.Status400BadRequest)
         .ProducesProblem(StatusCodes.Status404NotFound)

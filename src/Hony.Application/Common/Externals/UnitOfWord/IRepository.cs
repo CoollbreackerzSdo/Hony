@@ -58,4 +58,9 @@ public interface IRepository<T>
     /// <param name="key">La clave de la entidad a desactivar.</param>
     /// <returns><c>true</c> si la entidad se desactivó correctamente; de lo contrario, <c>false</c>.</returns>
     bool ExecuteDisable(EntityKey<Guid> key);
+    /// Agrega una nueva entidad a la base de datos y devuelve la entidad agregada.
+    /// </summary>
+    /// <param name="model">La entidad a agregar.</param>
+    /// <returns>La entidad agregada.</returns>
+    T AddTrack(T model);
 }

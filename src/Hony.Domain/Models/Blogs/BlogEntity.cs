@@ -25,7 +25,7 @@ public class BlogEntity : EntityBase
     /// <summary>
     /// Obtiene o establece los detalles adicionales del blog.
     /// </summary>
-    public required BlogDetail Detail { get; init; }
+    public BlogDetail? Detail { get; init; }
 
     /// <summary>
     /// Obtiene o establece la colección de comentarios asociados con el blog.

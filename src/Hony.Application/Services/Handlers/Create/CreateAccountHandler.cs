@@ -36,6 +36,11 @@ internal sealed class CreateAccountHandler(IUnitOfWord word, IPasswordHasher<Acc
 }
 
 /// <summary>
-/// Registro de estructura que representa el comando de creación de cuenta.
+/// Comando para la creación de una cuenta.
 /// </summary>
+/// <param name="UserName">Nombre de usuario para la cuenta.</param>
+/// <param name="Email">Correo electrónico asociado a la cuenta.</param>
+/// <param name="Password">Contraseña para la cuenta.</param>
+/// <param name="LastName">Apellido del usuario (opcional).</param>
+/// <param name="FirstName">Nombre del usuario (opcional).</param>
 public readonly record struct CreateAccountCommandHandler(string UserName, string Email, string Password, string? LastName = null, string? FirstName = null);

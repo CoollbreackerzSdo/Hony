@@ -8,10 +8,12 @@
     "Hmac",
     "Hony",
     "Infras",
+    "Manejador",
     "Mapperly",
     "Npgsql",
     "Riok",
-    "Serilog"
+    "Serilog",
+    "tupla"
   ],
   "cSpell.language": "en,es-ES"
 }

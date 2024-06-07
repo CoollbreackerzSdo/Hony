@@ -30,5 +30,5 @@ public class BlogEntity : EntityBase
     /// <summary>
     /// Obtiene o establece la colección de comentarios asociados con el blog.
     /// </summary>
-    public virtual ICollection<CommentEntity>? Comments { get; set; }
+    public virtual ICollection<CommentEntity> Comments { get; set; } = new HashSet<CommentEntity>();
 }

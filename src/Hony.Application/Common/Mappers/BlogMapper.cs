@@ -27,5 +27,5 @@ internal static partial class BlogMapper
     public static partial BlogView ToView(BlogEntity blog);
     [ObjectFactory]
     private static BlogView ViewFactory(BlogEntity blog)
-        => new(Id: blog.Id, Name: blog.Name, Content: blog.Content, Creation: blog.RegisterDate.ToDateTime(blog.RegisterTime), Cements: blog.Comments!.Count);
+        => new(Id: blog.Id, Name: blog.Name, Content: blog.Content, Creation: blog.RegisterDate.ToDateTime(blog.RegisterTime), Cements: blog.Comments.Count);
 }

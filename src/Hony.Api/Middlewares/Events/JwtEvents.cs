@@ -24,7 +24,7 @@ public class JwtEvents
             context.Fail("Invalid Token");
             return Task.CompletedTask;
         }
-        var tokenSlice = context.Request.Headers.Authorization.ToString()["bearer ".Length..];
+        var tokenSlice = token["bearer ".Length..].ToString();
         var isExpireResult = context.HttpContext.RequestServices.GetRequiredService<IJwtManager>()
             .IsExpired(x => x.AccessToken == tokenSlice);
         if (isExpireResult.IsSuccess)

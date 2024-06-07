@@ -29,7 +29,7 @@ public class AuthEndpoint : IEndpoint
                 return Results.Ok(jwt.ToTransport());
             }
             return handleResult.ToMinimalApiResult();
-        }).AddEndpointFilter<ValidateCreateAccountFilter>()
+        }).AddEndpointFilter<GenericValidator<CreateAccountCommandHandler>>()
         .Accepts<CreateAccountCommandHandler>("application/json")
         .ProducesProblem(StatusCodes.Status409Conflict)
         .Produces<string>(StatusCodes.Status200OK)
@@ -51,7 +51,8 @@ public class AuthEndpoint : IEndpoint
                 ResultStatus.Invalid => Results.BadRequest(),
                 _ => handleResult.ToMinimalApiResult()
             };
-        }).Accepts<ValidateAccountCommandHandler>("application/json")
+        }).AddEndpointFilter<GenericValidator<ValidateAccountCommandHandler>>()
+        .Accepts<ValidateAccountCommandHandler>("application/json")
         .ProducesProblem(StatusCodes.Status400BadRequest)
         .ProducesProblem(StatusCodes.Status404NotFound)
         .Produces<string>(StatusCodes.Status200OK)

@@ -25,6 +25,10 @@ public sealed class BlogConfiguration : EntityBaseConfiguration<BlogEntity>
             .HasMaxLength(1_000)
             .HasColumnName("name");
 
+        // Configuración de las propiedades de tiempo
+        builder.Property(x => x.RegisterDate).HasColumnName("register_date").IsRequired();
+        builder.Property(x => x.RegisterTime).HasColumnName("register_time").IsRequired();
+
         // Configuración de la propiedad Content
         builder.Property(x => x.Content)
             .IsRequired()

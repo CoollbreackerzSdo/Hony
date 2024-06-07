@@ -23,7 +23,5 @@ public abstract class EntityBaseConfiguration<T> : IEntityTypeConfiguration<T>
             .HasConversion(x => x.Value, value => new EntityKey<Guid>(value))
             .HasColumnName("id");
         builder.Property(x => x.IsActive).HasColumnName("is_active");
-        builder.Property(x => x.RegisterDate).HasColumnName("register_date").IsRequired();
-        builder.Property(x => x.RegisterTime).HasColumnName("register_time").IsRequired();
     }
 }

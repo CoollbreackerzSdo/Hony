@@ -18,14 +18,18 @@ internal static partial class BlogMapper
     /// <param name="command">The command containing blog details.</param>
     /// <returns>A new instance of BlogEntity populated with the command data.</returns>
     public static BlogEntity Map(Guid id, CreateBlogCommandHandler command)
-        => new()
+    {
+        var currentTime = DateTime.UtcNow;
+        return new BlogEntity
         {
+            Id = Guid.NewGuid(),
             CreatorId = id,
             Name = command.Name,
-            Content = command.Content
+            Content = command.Content,
+            RegisterDate = DateOnly.FromDateTime(currentTime),
+            RegisterTime = TimeOnly.FromDateTime(currentTime)
         };
-    public static partial BlogView ToView(BlogEntity blog);
-    [ObjectFactory]
-    private static BlogView ViewFactory(BlogEntity blog)
+    }
+    public static BlogView ToView(BlogEntity blog)
         => new(Id: blog.Id, Name: blog.Name, Content: blog.Content, Creation: blog.RegisterDate.ToDateTime(blog.RegisterTime), Cements: blog.Comments.Count);
 }

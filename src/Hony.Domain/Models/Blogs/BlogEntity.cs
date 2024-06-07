@@ -1,3 +1,5 @@
+using System.Diagnostics.CodeAnalysis;
+
 using Hony.Domain.Models.Account;
 using Hony.Domain.Models.Twits;
 
@@ -6,7 +8,7 @@ namespace Hony.Domain.Models.Blogs;
 /// <summary>
 /// Modelo que representa una entidad de blog, heredando de <see cref="EntityBase"/>.
 /// </summary>
-public class BlogEntity : EntityBase
+public sealed class BlogEntity : EntityBase, IRegister
 {
     /// <summary>
     /// Obtiene o establece el identificador del creador del blog.
@@ -30,5 +32,15 @@ public class BlogEntity : EntityBase
     /// <summary>
     /// Obtiene o establece la colección de comentarios asociados con el blog.
     /// </summary>
-    public virtual ICollection<CommentEntity> Comments { get; set; } = new HashSet<CommentEntity>();
+    public ICollection<CommentEntity> Comments { get; set; } = new HashSet<CommentEntity>();
+
+    /// <summary>
+    /// Obtiene la hora en que la entidad fue registrada.
+    /// </summary>
+    public required TimeOnly RegisterTime { get; init; }
+
+    /// <summary>
+    /// Obtiene la fecha en que la entidad fue registrada.
+    /// </summary>
+    public required DateOnly RegisterDate { get; init; }
 }

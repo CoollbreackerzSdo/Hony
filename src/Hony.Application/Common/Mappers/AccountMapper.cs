@@ -17,12 +17,18 @@ internal static partial class AccountMapper
     /// <param name="command">El comando de creación de cuenta.</param>
     /// <returns>Una nueva instancia de <see cref="AccountEntity"/> que representa la cuenta creada.</returns>
     public static AccountEntity Map(CreateAccountCommandHandler command)
-        => new()
+    {
+        var currentTime = DateTime.UtcNow;
+        return new AccountEntity
         {
+            Id = Guid.NewGuid(),
             UserName = command.UserName,
             Security = ToSecurity(command),
-            Detail = ToDetail(command)
+            Detail = ToDetail(command),
+            RegisterDate = DateOnly.FromDateTime(currentTime),
+            RegisterTime = TimeOnly.FromDateTime(currentTime)
         };
+    }
 
     /// <summary>
     /// Convierte una entidad de cuenta en credenciales de cuenta.

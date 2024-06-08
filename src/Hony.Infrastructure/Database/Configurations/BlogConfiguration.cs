@@ -40,7 +40,6 @@ public sealed class BlogConfiguration : EntityBaseConfiguration<BlogEntity>
         // Configuración del tipo de propiedad Detail
         builder.OwnsOne(x => x.Detail, navigation =>
         {
-            navigation.ToJson();
             navigation.Property(x => x.ReTwits)
                 .HasDefaultValue(0)
                 .HasColumnName("re_twits");

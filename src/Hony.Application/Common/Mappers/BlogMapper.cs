@@ -30,6 +30,11 @@ internal static partial class BlogMapper
             RegisterTime = TimeOnly.FromDateTime(currentTime)
         };
     }
+    /// <summary>
+    /// Convierte una entidad de blog en una vista de blog.
+    /// </summary>
+    /// <param name="blog">La entidad de blog a convertir.</param>
+    /// <returns>Una vista de blog con la información de la entidad proporcionada.</returns>
     public static BlogView ToView(BlogEntity blog)
         => new(Id: blog.Id, Name: blog.Name, Content: blog.Content, Creation: blog.RegisterDate.ToDateTime(blog.RegisterTime), Cements: blog.Comments.Count);
 }

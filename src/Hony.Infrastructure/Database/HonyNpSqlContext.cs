@@ -1,6 +1,7 @@
 using Hony.Domain.Models.Account;
+using Hony.Domain.Models.Aggregates;
 using Hony.Domain.Models.Blogs;
-using Hony.Domain.Models.Twits;
+using Hony.Domain.Models.Combinations;
 using Hony.Infrastructure.Database.Configurations;
 
 namespace Hony.Infrastructure.Database;
@@ -20,6 +21,7 @@ public sealed class HonyAccountsNpSqlContext(DbContextOptions options) : DbConte
         modelBuilder.ApplyConfiguration(new AccountConfiguration());
         modelBuilder.ApplyConfiguration(new CommentConfiguration());
         modelBuilder.ApplyConfiguration(new BlogConfiguration());
+        modelBuilder.ApplyConfiguration(new TagBlogsConfiguration());
     }
 
     /// <summary>
@@ -30,9 +32,16 @@ public sealed class HonyAccountsNpSqlContext(DbContextOptions options) : DbConte
     /// Conjunto de entidades de tipo <see cref="BlogEntity"/> en el contexto de la base de datos.
     /// </summary>
     public DbSet<BlogEntity> Blogs { get; init; } = null!;
-
     /// <summary>
     /// Conjunto de entidades de tipo <see cref="CommentEntity"/> en el contexto de la base de datos.
     /// </summary>
     public DbSet<CommentEntity> Comments { get; init; } = null!;
+    /// <summary>
+    /// Conjunto de entidades de tipo <see cref="TagEntity"/> en el contexto de la base de datos.
+    /// </summary>
+    public DbSet<TagEntity> Tags { get; init; } = null!;
+    /// <summary>
+    /// Conjunto de entidades de tipo <see cref="TagBlogsEntity"/> en el contexto de la base de datos.
+    /// </summary>
+    public DbSet<TagBlogsEntity> TagAndBlogs { get; init; } = null!;
 }

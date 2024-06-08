@@ -30,4 +30,4 @@ public class CreateBlogHandler(IUnitOfWord word) : IHandlerAsync<(Guid, CreateBl
 /// </summary>
 /// <param name="Name">Nombre del blog.</param>
 /// <param name="Content">Contenido del blog.</param>
-public readonly record struct CreateBlogCommandHandler(string Name, string Content);
+public readonly record struct CreateBlogCommandHandler(string Name, string Content, Guid CategoryId);

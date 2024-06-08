@@ -1,7 +1,5 @@
-using System.Diagnostics.CodeAnalysis;
-
 using Hony.Domain.Models.Account;
-using Hony.Domain.Models.Twits;
+using Hony.Domain.Models.Aggregates;
 
 namespace Hony.Domain.Models.Blogs;
 
@@ -14,6 +12,10 @@ public sealed class BlogEntity : EntityBase, IRegister
     /// Obtiene o establece el identificador del creador del blog.
     /// </summary>
     public required EntityKey<Guid> CreatorId { get; init; }
+    /// <summary>
+    /// Obtiene o establece el creador del blog asociado a la categoría.
+    /// </summary>
+    public AccountEntity? Creator { get; init; }
 
     /// <summary>
     /// Obtiene o establece el nombre del blog.

@@ -1,4 +1,3 @@
-using Hony.Domain.Models.Account;
 using Hony.Domain.Models.Blogs;
 
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -32,7 +31,7 @@ public sealed class BlogConfiguration : EntityBaseConfiguration<BlogEntity>
         // Configuración de la propiedad Content
         builder.Property(x => x.Content)
             .IsRequired()
-            .HasMaxLength(2_000)
+            .HasMaxLength(10_000)
             .HasColumnName("content");
 
         // Configuración de la propiedad CreatorId
@@ -42,6 +41,7 @@ public sealed class BlogConfiguration : EntityBaseConfiguration<BlogEntity>
         // Configuración del tipo de propiedad Detail
         builder.OwnsOne(x => x.Detail, navigation =>
         {
+            navigation.ToJson();
             navigation.Property(x => x.ReTwits)
                 .HasDefaultValue(0)
                 .HasColumnName("re_twits");
@@ -49,9 +49,9 @@ public sealed class BlogConfiguration : EntityBaseConfiguration<BlogEntity>
 
         // Configuración de la relación con la entidad CommentEntity
         builder.HasMany(x => x.Comments)
-            .WithOne()
+            .WithOne(x => x.Blog)
             .HasForeignKey(x => x.BlogId)
             .IsRequired()
-            .OnDelete(DeleteBehavior.ClientNoAction);
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

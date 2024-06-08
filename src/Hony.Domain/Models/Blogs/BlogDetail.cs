@@ -1,5 +1,3 @@
-using Hony.Domain.Models.Twits;
-
 namespace Hony.Domain.Models.Blogs;
 
 /// <summary>

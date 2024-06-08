@@ -1,5 +1,5 @@
 using Hony.Application.Common.Externals.UnitOfWord;
-using Hony.Domain.Models.Twits;
+using Hony.Domain.Models.Aggregates;
 using Hony.Infrastructure.Database;
 
 namespace Hony.Infrastructure.Implementations.UnitOfWord;

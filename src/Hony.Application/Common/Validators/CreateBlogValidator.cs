@@ -15,6 +15,6 @@ public class CreateBlogValidator : AbstractValidator<CreateBlogCommandHandler>
     public CreateBlogValidator()
     {
         RuleFor(x => x.Name).NotEmpty().MinimumLength(5).MaximumLength(1_000);
-        RuleFor(x => x.Content).NotEmpty().MaximumLength(2_000);
+        RuleFor(x => x.Content).NotEmpty().MaximumLength(10_000);
     }
 }

@@ -44,14 +44,14 @@ public sealed class AccountConfiguration : EntityBaseConfiguration<AccountEntity
 
         // Configuración de las propiedades de navegación
         builder.HasMany(x => x.Blogs)
-            .WithOne()
+            .WithOne(x => x.Creator)
             .HasForeignKey(x => x.CreatorId)
             .IsRequired()
-            .OnDelete(DeleteBehavior.ClientNoAction);
+            .OnDelete(DeleteBehavior.Cascade);
         builder.HasMany(x => x.Comments)
-            .WithOne()
+            .WithOne(x => x.Creator)
             .HasForeignKey(x => x.CreatorId)
             .IsRequired()
-            .OnDelete(DeleteBehavior.ClientNoAction);
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

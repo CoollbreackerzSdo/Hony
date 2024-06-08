@@ -6,30 +6,34 @@ Hony es una API de blogs diseñada para proporcionar funcionalidades básicas pa
 ### Características:
 
 Publicaciones de blog: Crear, leer, actualizar y eliminar publicaciones.
+
 Usuarios: Registro de usuarios, autenticación y gestión de perfiles.
 Comentarios: Añadir y gestionar comentarios en las publicaciones.
 
-### Building and running your application
+### Construyendo y ejecutando su aplicación
 
-When you're ready, start your application by running:
-`docker compose up --build`.
+Cuando esté listo, inicie su aplicación ejecutando:
 
-Your application will be available at http://localhost:8080.
+`La ventana acoplable compone --build`.
 
-### Deploying your application to the cloud
+Su aplicación estará disponible en http://localhost:8080.
 
-First, build your image, e.g.: `docker build -t myapp .`.
-If your cloud uses a different CPU architecture than your development
-machine (e.g., you are on a Mac M1 and your cloud provider is amd64),
-you'll want to build the image for that platform, e.g.:
-`docker build --platform=linux/amd64 -t myapp .`.
+### Implementación de su aplicación en la nube
 
-Then, push it to your registry, e.g. `docker push myregistry.com/myapp`.
+Primero, cree su imagen, por ejemplo: `docker compose up -t myapp.`.
 
-Consult Docker's [getting started](https://docs.docker.com/go/get-started-sharing/)
-docs for more detail on building and pushing.
+Si su nube utiliza una arquitectura de CPU diferente a la de su desarrollo máquina (por ejemplo, tiene una Mac M1 y su proveedor de nube es amd64), querrás crear la imagen para esa plataforma, por ejemplo: 
 
-### References
-* [Docker's .NET guide](https://docs.docker.com/language/dotnet/)
-* The [dotnet-docker](https://github.com/dotnet/dotnet-docker/tree/main/samples)
-  repository has many relevant samples and docs.
+`docker build --platform=linux/amd64 -t miaplicación.`.
+
+Luego, envíelo a su registro, p. `docker push myregistry.com/myapp`.
+
+Consulte los [primeros pasos] de Docker (https://docs.docker.com/go/get-started-sharing/) docs para obtener más detalles sobre cómo construir y empujar.
+
+### Referencias
+
+* [Guía .NET de Docker](https://docs.docker.com/language/dotnet/)
+
+* El [dotnet-docker](https://github.com/dotnet/dotnet-docker/tree/main/samples)
+
+  El repositorio tiene muchos ejemplos y documentos relevantes.

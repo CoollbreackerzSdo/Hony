@@ -27,4 +27,8 @@ public interface IUnitOfWord : IDisposable
     /// Obtiene el repositorio de blogs.
     /// </summary>
     IBlogRepository BlogRepository { get; }
+    /// <summary>
+    /// Obtiene el repositorio de etiquetas.
+    /// </summary>
+    ITagRepository TagRepository { get; }
 }

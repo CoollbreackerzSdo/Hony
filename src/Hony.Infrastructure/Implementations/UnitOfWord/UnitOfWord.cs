@@ -1,7 +1,8 @@
 using Hony.Application.Common.Externals.UnitOfWord;
 using Hony.Infrastructure.Database;
 
-namespace Hony.Infrastructure.Implementations.UnitOfWord;/// <summary>
+namespace Hony.Infrastructure.Implementations.UnitOfWord;
+/// <summary>
 /// Clase interna que representa una unidad de trabajo para operaciones relacionadas con la base de datos.
 /// Implementa la interfaz <see cref="IUnitOfWord"/>.
 /// </summary>
@@ -17,6 +18,7 @@ internal class UnitOfWord : IUnitOfWord
         AccountRepository = new AccountRepository(_context);
         CommentRepository = new CommentRepository(_context);
         BlogRepository = new BlogRepository(_context);
+        TagRepository = new TagRepository(_context);
     }
     /// <summary>
     /// Guarda todos los cambios realizados en la base de datos asincrónicamente.
@@ -56,8 +58,13 @@ internal class UnitOfWord : IUnitOfWord
     /// <summary>
     /// Obtiene el repositorio de comentarios.
     /// </summary>
-    public ICommentRepository CommentRepository { get; }/// <summary>
-                                                        /// Obtiene el repositorio de blogs.
-                                                        /// </summary>
+    public ICommentRepository CommentRepository { get; }
+    /// <summary>
+    /// Obtiene el repositorio de blogs.
+    /// </summary>
     public IBlogRepository BlogRepository { get; }
+    /// <summary>
+    /// Obtiene el repositorio de etiquetas.
+    /// </summary>
+    public ITagRepository TagRepository { get; }
 }

@@ -1,5 +1,6 @@
 using Hony.Domain.Models.Account;
 using Hony.Domain.Models.Aggregates;
+using Hony.Domain.Models.Combinations;
 
 namespace Hony.Domain.Models.Blogs;
 
@@ -45,4 +46,8 @@ public sealed class BlogEntity : EntityBase, IRegister
     /// Obtiene la fecha en que la entidad fue registrada.
     /// </summary>
     public required DateOnly RegisterDate { get; init; }
+    /// <summary>
+    /// Obtiene o establece la colección de de tags asociados con el blog.
+    /// </summary>
+    public ICollection<TagBlogEntity> Tags { get; set; } = new HashSet<TagBlogEntity>();
 }

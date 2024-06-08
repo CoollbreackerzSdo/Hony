@@ -1,7 +1,6 @@
 using Hony.Domain.Models.Blogs;
 
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace Hony.Infrastructure.Database.Configurations;
 
@@ -47,8 +46,15 @@ public sealed class BlogConfiguration : EntityBaseConfiguration<BlogEntity>
                 .HasColumnName("re_twits");
         });
 
-        // Configuración de la relación con la entidad CommentEntity
+        // Configuración de la relación con los comentarios
         builder.HasMany(x => x.Comments)
+            .WithOne(x => x.Blog)
+            .HasForeignKey(x => x.BlogId)
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Cascade);
+
+        // Configuración de la relación con los tags
+        builder.HasMany(x => x.Tags)
             .WithOne(x => x.Blog)
             .HasForeignKey(x => x.BlogId)
             .IsRequired()

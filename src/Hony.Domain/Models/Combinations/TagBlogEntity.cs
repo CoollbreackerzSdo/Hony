@@ -3,7 +3,7 @@ using Hony.Domain.Models.Blogs;
 
 namespace Hony.Domain.Models.Combinations;
 
-public sealed class TagBlogsEntity
+public sealed class TagBlogEntity : EntityBase
 {
     public required EntityKey<Guid> TagId { get; init; }
     public required EntityKey<Guid> BlogId { get; init; }

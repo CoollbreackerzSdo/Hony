@@ -4,10 +4,10 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Hony.Infrastructure.Database.Configurations;
 
-public sealed class TagBlogsConfiguration : IEntityTypeConfiguration<TagBlogsEntity>
+public sealed class TagBlogsConfiguration : EntityBaseConfiguration<TagBlogEntity>
 {
-    public void Configure(EntityTypeBuilder<TagBlogsEntity> builder)
+    public override void Configure(EntityTypeBuilder<TagBlogEntity> builder)
     {
-        
+        base.Configure(builder);
     }
 }

@@ -22,6 +22,7 @@ public sealed class HonyAccountsNpSqlContext(DbContextOptions options) : DbConte
         modelBuilder.ApplyConfiguration(new CommentConfiguration());
         modelBuilder.ApplyConfiguration(new BlogConfiguration());
         modelBuilder.ApplyConfiguration(new TagBlogsConfiguration());
+        modelBuilder.ApplyConfiguration(new TagConfiguration());
     }
 
     /// <summary>
@@ -41,7 +42,11 @@ public sealed class HonyAccountsNpSqlContext(DbContextOptions options) : DbConte
     /// </summary>
     public DbSet<TagEntity> Tags { get; init; } = null!;
     /// <summary>
-    /// Conjunto de entidades de tipo <see cref="TagBlogsEntity"/> en el contexto de la base de datos.
+    /// Conjunto de entidades de tipo <see cref="TagBlogEntity"/> en el contexto de la base de datos.
     /// </summary>
-    public DbSet<TagBlogsEntity> TagAndBlogs { get; init; } = null!;
+    public DbSet<TagBlogEntity> TagAndBlogs { get; init; } = null!;
+    /// <summary>
+    /// Conjunto de entidades de tipo <see cref="CategoryEntity"/> en el contexto de la base de datos.
+    /// </summary>
+    public DbSet<CategoryEntity> Categories { get; init; } = null!;
 }

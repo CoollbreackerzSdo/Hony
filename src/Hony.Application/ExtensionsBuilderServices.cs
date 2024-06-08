@@ -53,6 +53,7 @@ public static class ExtensionsBuilderServices
         services.AddTransient<IHandler<ValidateAccountCommandHandler, AccountCredentials>, ValidateAccountHandler>();
         services.AddTransient<IHandlerAsync<CreateAccountCommandHandler, AccountCredentials>, CreateAccountHandler>();
         services.AddTransient<IHandlerAsync<(Guid, CreateBlogCommandHandler), BlogView>, CreateBlogHandler>();
+        services.AddTransient<IHandlerAsync<string>, CreateCategoryHandler>();
         return services;
     }
 

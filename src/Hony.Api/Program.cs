@@ -10,7 +10,7 @@ builder.Configuration.AddEnvConfigurations();
 builder.Services.AddEndpoints();
 builder.Services.AddInfrastructure();
 builder.Services.ApplicationServices();
-builder.Services.AddSerilogConsole();
+builder.Services.AddSerilogServices();
 builder.Services.AddOpenApi();
 builder.Services.AddMiddlewares();
 builder.Services.AddAuthenticationConfiguration();

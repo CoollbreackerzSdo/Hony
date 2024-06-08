@@ -2,7 +2,7 @@ using Hony.Application.Common.Externals.UnitOfWord;
 using Hony.Domain.Models.Aggregates;
 using Hony.Infrastructure.Database;
 
-namespace Hony.Infrastructure.Implementations.UnitOfWord; 
+namespace Hony.Infrastructure.Implementations.UnitOfWord;
 /// <summary>
 /// Repositorio para la entidad <see cref="TagEntity"/> que proporciona operaciones específicas para etiquetas.
 /// Hereda de <see cref="Repository{TagEntity}"/> e implementa <see cref="ITagRepository"/>.

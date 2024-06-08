@@ -10,7 +10,7 @@ services:
     restart: always
     environment:
       - POST_CONNECTION=server=192.168.0.3;port=5432;user id=${PUSER};password=${PPASS};database=${PDATA};
-      - MONG_CONNECTION=mongodb://${PUSER}:${PPASS}@192.168.0.5:27017
+      - MONG_CONNECTION=mongodb://${MUSER}:${MPASS}@192.168.0.5:27017
       - JWT_KEY=${JTKEY}
     ports:
       - 7005:7005
@@ -54,8 +54,9 @@ services:
     image: mongo
     container_name: honyapi-mongo
     environment:
-      - MONGO_INITDB_ROOT_PASSWORD=${PPASS}
-      - MONGO_INITDB_ROOT_USERNAME=${PUSER}
+      - MONGO_INITDB_ROOT_USERNAME=${MUSER}
+      - MONGO_INITDB_ROOT_PASSWORD=${MPASS}
+      - MONGO_INITDB_DATABASE=test
     expose:
       - 27017
     ports:

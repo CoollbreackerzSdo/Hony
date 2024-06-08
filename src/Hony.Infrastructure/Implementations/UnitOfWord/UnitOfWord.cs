@@ -19,6 +19,7 @@ internal class UnitOfWord : IUnitOfWord
         CommentRepository = new CommentRepository(_context);
         BlogRepository = new BlogRepository(_context);
         TagRepository = new TagRepository(_context);
+        CategoryRepository = new CategoryRepository(_context);
     }
     /// <summary>
     /// Guarda todos los cambios realizados en la base de datos asincrónicamente.
@@ -67,4 +68,8 @@ internal class UnitOfWord : IUnitOfWord
     /// Obtiene el repositorio de etiquetas.
     /// </summary>
     public ITagRepository TagRepository { get; }
+    /// <summary>
+    /// Obtiene el repositorio de Categorías.
+    /// </summary>
+    public ICategoryRepository CategoryRepository { get; }
 }

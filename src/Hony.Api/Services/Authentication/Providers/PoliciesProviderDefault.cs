@@ -13,5 +13,5 @@ public static class PoliciesProviderDefault
     /// <summary>
     /// Nombre predeterminado para la política de autorización de administradores.
     /// </summary>
-    public const string MANAGES = "managers";
+    public const string MANAGES_VALORICE = "managers";
 }

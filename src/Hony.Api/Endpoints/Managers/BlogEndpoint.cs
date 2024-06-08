@@ -19,7 +19,9 @@ public class BlogEndpoint : IEndpoint
         {
             var handleResult = await handler.HandleAsync((new(userClaims.FindFirstValue(ClaimTypes.NameIdentifier)!), command), token);
             return handleResult.IsSuccess ? Results.Ok(handleResult.Value) : Results.NotFound();
-        }).AddEndpointFilter<GenericValidator<CreateBlogCommandHandler>>().Accepts<CreateBlogCommandHandler>("application/json")
+        }).AddEndpointFilter<GenericValidator<CreateBlogCommandHandler>>()
+        .Accepts<CreateBlogCommandHandler>("application/json")
+        .WithDescription("Endpoint de creación de blogs")
         .Produces<BlogView>(StatusCodes.Status200OK)
         .WithTags(["Blogs"])
         .WithOpenApi();

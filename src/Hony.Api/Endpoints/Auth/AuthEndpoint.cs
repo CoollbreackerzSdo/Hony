@@ -33,7 +33,7 @@ public class AuthEndpoint : IEndpoint
         }).AddEndpointFilter<GenericValidator<CreateAccountCommandHandler>>()
         .Accepts<CreateAccountCommandHandler>("application/json")
         .ProducesProblem(StatusCodes.Status409Conflict)
-        .Produces<string>(StatusCodes.Status200OK)
+        .Produces<TokenTransport>(StatusCodes.Status200OK)
         .WithDescription("Endpoint de registro del sitio")
         .WithTags(["Authentication"])
         .WithOpenApi();
@@ -56,7 +56,7 @@ public class AuthEndpoint : IEndpoint
         .Accepts<ValidateAccountCommandHandler>("application/json")
         .ProducesProblem(StatusCodes.Status400BadRequest)
         .ProducesProblem(StatusCodes.Status404NotFound)
-        .Produces<string>(StatusCodes.Status200OK)
+        .Produces<TokenTransport>(StatusCodes.Status200OK)
         .WithDescription("Endpoint de login del sitio")
         .WithTags(["Authentication"])
         .WithOpenApi();
@@ -73,7 +73,7 @@ public class AuthEndpoint : IEndpoint
         .WithDescription("Endpoint de cerrar sesión en el token utilizado para esta solicitud")
         .WithTags(["Authentication"])
         .ProducesProblem(StatusCodes.Status203NonAuthoritative)
-        .Produces<string>(StatusCodes.Status200OK)
+        .Produces(StatusCodes.Status200OK)
         .WithOpenApi();
 
         api.MapGet("v1/sign-out-all", (ClaimsPrincipal userClaims, IJwtManager jwtManager) =>
@@ -88,7 +88,7 @@ public class AuthEndpoint : IEndpoint
         .WithDescription("Endpoint de cerrar sesión en todos los tokens activos")
         .WithTags(["Authentication"])
         .ProducesProblem(StatusCodes.Status203NonAuthoritative)
-        .Produces<string>(StatusCodes.Status200OK)
+        .Produces(StatusCodes.Status200OK)
         .WithOpenApi();
     }
 }

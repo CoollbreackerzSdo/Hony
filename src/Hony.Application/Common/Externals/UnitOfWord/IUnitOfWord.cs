@@ -31,4 +31,8 @@ public interface IUnitOfWord : IDisposable
     /// Obtiene el repositorio de etiquetas.
     /// </summary>
     ITagRepository TagRepository { get; }
+    /// <summary>
+    /// Obtiene el repositorio de Categorías.
+    /// </summary>
+    ICategoryRepository CategoryRepository { get; }
 }

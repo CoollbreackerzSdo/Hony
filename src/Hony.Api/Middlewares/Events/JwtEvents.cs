@@ -29,7 +29,7 @@ public class JwtEvents
             .IsExpired(x => x.AccessToken == tokenSlice);
         if (isExpireResult.IsSuccess)
         {
-            if(isExpireResult.Value)
+            if (isExpireResult.Value)
             {
                 context.Fail("Expire Token");
                 return Task.CompletedTask;

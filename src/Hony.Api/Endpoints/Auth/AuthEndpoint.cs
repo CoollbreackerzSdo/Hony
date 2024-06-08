@@ -1,6 +1,7 @@
 using System.Security.Claims;
 
 using Ardalis.Result.AspNetCore;
+
 using Hony.Api.Endpoints.Filters.Validation;
 using Hony.Api.Models;
 using Hony.Api.Models.Token;
@@ -19,7 +20,7 @@ public class AuthEndpoint : IEndpoint
     {
         var api = builder.MapGroup("auth");
 
-        api.MapPost("v1/sign-up", async (CreateAccountCommandHandler command,IJwtManager jwtManager, IJwtServices jwtServices,IHandlerAsync<CreateAccountCommandHandler, AccountCredentials> handler, CancellationToken token) =>
+        api.MapPost("v1/sign-up", async (CreateAccountCommandHandler command, IJwtManager jwtManager, IJwtServices jwtServices, IHandlerAsync<CreateAccountCommandHandler, AccountCredentials> handler, CancellationToken token) =>
         {
             Result<AccountCredentials> handleResult = await handler.HandleAsync(command, token);
             if (handleResult.IsSuccess)
@@ -60,10 +61,10 @@ public class AuthEndpoint : IEndpoint
         .WithTags(["Authentication"])
         .WithOpenApi();
 
-        api.MapGet("v1/sign-out", (ClaimsPrincipal userClaims,IJwtManager jwtManager) =>
+        api.MapGet("v1/sign-out", (ClaimsPrincipal userClaims, IJwtManager jwtManager) =>
         {
             var idClaim = userClaims.FindFirstValue(ClaimTypes.NameIdentifier);
-            if(string.IsNullOrWhiteSpace(idClaim)) return Results.NotFound();
+            if (string.IsNullOrWhiteSpace(idClaim)) return Results.NotFound();
 
             var id = Guid.Parse(idClaim);
             jwtManager.Delete(x => x.AccountId == id);
@@ -75,10 +76,10 @@ public class AuthEndpoint : IEndpoint
         .Produces<string>(StatusCodes.Status200OK)
         .WithOpenApi();
 
-        api.MapGet("v1/sign-out-all", (ClaimsPrincipal userClaims,IJwtManager jwtManager) =>
+        api.MapGet("v1/sign-out-all", (ClaimsPrincipal userClaims, IJwtManager jwtManager) =>
         {
             var idClaim = userClaims.FindFirstValue(ClaimTypes.NameIdentifier);
-            if(string.IsNullOrWhiteSpace(idClaim)) return Results.NotFound();
+            if (string.IsNullOrWhiteSpace(idClaim)) return Results.NotFound();
 
             var id = Guid.Parse(idClaim);
             jwtManager.Delete(x => x.AccountId == id);

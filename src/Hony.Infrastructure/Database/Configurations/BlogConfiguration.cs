@@ -59,5 +59,12 @@ public sealed class BlogConfiguration : EntityBaseConfiguration<BlogEntity>
             .HasForeignKey(x => x.BlogId)
             .IsRequired()
             .OnDelete(DeleteBehavior.Cascade);
+
+        // Configuración de la relación con las categorías
+        builder.HasMany(x => x.Categories)
+            .WithOne(x => x.Blog)
+            .HasForeignKey(x => x.BlogId)
+            .IsRequired()
+            .OnDelete(DeleteBehavior.NoAction);
     }
 }

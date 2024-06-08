@@ -21,7 +21,7 @@ public sealed class CommentConfiguration : EntityBaseConfiguration<CommentEntity
         builder.Property(x => x.Message)
             .IsRequired()
             .HasMaxLength(5_000);
-        
+
         // Configuración de las propiedades de tiempo
         builder.Property(x => x.RegisterDate).HasColumnName("register_date").IsRequired();
         builder.Property(x => x.RegisterTime).HasColumnName("register_time").IsRequired();

@@ -59,7 +59,7 @@ public static class ExtensionsBuilderServices
         services.AddTransient<IHandlerAsync<CreateAccountCommandHandler, AccountCredentials>, CreateAccountHandler>();
         services.AddTransient<IHandlerAsync<(Guid, CreateBlogCommandHandler), BlogView>, CreateBlogHandler>();
         services.AddTransient<IHandlerAsync<CreateCategoryCommandHandler>, CreateCategoryHandler>();
-        services.AddKeyedTransient<IHandler<PaginationCommandHandler, ImmutableList<string>>, PaginationCategoryHandler>("category-page-name");
+        services.AddTransient<IHandler<PaginationCommandHandler, ImmutableList<CategoryView>>, PaginationCategoryHandler>();
         return services;
     }
 

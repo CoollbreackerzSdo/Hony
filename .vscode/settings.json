@@ -12,6 +12,8 @@
     "manejadores",
     "Mapperly",
     "Npgsql",
+    "Oklh",
+    "paginación",
     "Riok",
     "Serilog",
     "tupla"

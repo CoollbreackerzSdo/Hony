@@ -2,8 +2,6 @@ using Hony.Application.Common.Models;
 using Hony.Application.Services.Handlers.Create;
 using Hony.Domain.Models.Blogs;
 
-using Riok.Mapperly.Abstractions;
-
 namespace Hony.Application.Common.Mappers;
 /// <summary>
 /// Mapper class for mapping between CreateBlogCommandHandler and BlogEntity.
@@ -22,7 +20,6 @@ internal static partial class BlogMapper
         var currentTime = DateTime.UtcNow;
         return new BlogEntity
         {
-            Id = Guid.NewGuid(),
             CreatorId = id,
             Name = command.Name,
             Content = command.Content,

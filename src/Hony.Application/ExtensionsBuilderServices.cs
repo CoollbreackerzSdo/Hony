@@ -1,9 +1,12 @@
-﻿using FluentValidation;
+﻿using System.Collections.Immutable;
+
+using FluentValidation;
 
 using Hony.Application.Common.Models;
 using Hony.Application.Common.Validators;
 using Hony.Application.Services.Handlers;
 using Hony.Application.Services.Handlers.Create;
+using Hony.Application.Services.Handlers.Pagination;
 using Hony.Application.Services.Handlers.Validation;
 using Hony.Domain.Models.Account;
 
@@ -40,6 +43,8 @@ public static class ExtensionsBuilderServices
         services.AddTransient<IValidator<CreateBlogCommandHandler>, CreateBlogValidator>();
         services.AddTransient<IValidator<ValidateAccountCommandHandler>, ValidateAccountValidator>();
         services.AddTransient<IValidator<CreateAccountCommandHandler>, CreateAccountValidator>();
+        services.AddTransient<IValidator<CreateCategoryCommandHandler>, CreateCategoryValidator>();
+        services.AddTransient<IValidator<PaginationCommandHandler>, PaginationValidator>();
         return services;
     }
 
@@ -53,7 +58,8 @@ public static class ExtensionsBuilderServices
         services.AddTransient<IHandler<ValidateAccountCommandHandler, AccountCredentials>, ValidateAccountHandler>();
         services.AddTransient<IHandlerAsync<CreateAccountCommandHandler, AccountCredentials>, CreateAccountHandler>();
         services.AddTransient<IHandlerAsync<(Guid, CreateBlogCommandHandler), BlogView>, CreateBlogHandler>();
-        services.AddTransient<IHandlerAsync<string>, CreateCategoryHandler>();
+        services.AddTransient<IHandlerAsync<CreateCategoryCommandHandler>, CreateCategoryHandler>();
+        services.AddKeyedTransient<IHandler<PaginationCommandHandler, ImmutableList<string>>, PaginationCategoryHandler>("category-page-name");
         return services;
     }
 

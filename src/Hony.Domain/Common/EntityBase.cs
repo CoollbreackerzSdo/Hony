@@ -10,7 +10,7 @@ public abstract class EntityBase : IEntity<EntityKey<Guid>>, IActive
     /// <summary>
     /// Obtiene el identificador único de la entidad.
     /// </summary>
-    public required EntityKey<Guid> Id { get; init; }
+    public EntityKey<Guid> Id { get; init; } = Guid.NewGuid();
 
     /// <summary>
     /// Obtiene o establece un valor que indica si la entidad está activa.

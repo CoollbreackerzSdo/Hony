@@ -1,6 +1,8 @@
+using System.Collections.Immutable;
 using System.Linq.Expressions;
 
 using Hony.Application.Common.Externals.UnitOfWord;
+using Hony.Application.Common.Models;
 using Hony.Domain.Common;
 using Hony.Infrastructure.Database;
 
@@ -87,6 +89,25 @@ internal class Repository<T> : IRepository<T>
     {
         _table.Add(model);
         return model;
+    }
+    /// <summary>
+    /// Obtiene una lista inmutable de resultados mapeados de entidades ordenadas, aplicando paginación según el comando especificado.
+    /// </summary>
+    /// <typeparam name="TResult">El tipo de los resultados mapeados.</typeparam>
+    /// <typeparam name="TKey">El tipo de la clave de ordenación.</typeparam>
+    /// <param name="command">El comando que contiene los parámetros de paginación.</param>
+    /// <param name="orderKey">Una expresión que define la clave de ordenación para las entidades.</param>
+    /// <param name="mapper">Una expresión que define el mapeo de las entidades a los resultados.</param>
+    /// <returns>Una lista inmutable de resultados mapeados que cumplen con los criterios especificados.</returns>
+    public ImmutableList<TResult> ImmutablePagination<TResult, TKey>(PaginationCommandHandler command, Expression<Func<T, TKey>> orderKey, Expression<Func<T, TResult>> mapper)
+    {
+        var query = _table.AsQueryable();
+        var queryOrder = command.OrderMode switch
+        {
+            PageOrderMode.Desc => query.OrderBy(orderKey),
+            _ => query.OrderByDescending(orderKey)
+        };
+        return [.. queryOrder.Skip(command.Skip).Take(command.Count).Select(mapper)];
     }
     private readonly HonyAccountsNpSqlContext _context;
     private readonly DbSet<T> _table;

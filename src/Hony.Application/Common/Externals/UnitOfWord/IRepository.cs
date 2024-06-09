@@ -1,5 +1,7 @@
+using System.Collections.Immutable;
 using System.Linq.Expressions;
 
+using Hony.Application.Common.Models;
 using Hony.Domain.Common;
 
 using Optional;
@@ -63,4 +65,14 @@ public interface IRepository<T>
     /// <param name="model">La entidad a agregar.</param>
     /// <returns>La entidad agregada.</returns>
     T AddTrack(T model);
+    /// <summary>
+    /// Obtiene una lista inmutable de resultados mapeados de entidades ordenadas, aplicando paginación según el comando especificado.
+    /// </summary>
+    /// <typeparam name="TResult">El tipo de los resultados mapeados.</typeparam>
+    /// <typeparam name="TKey">El tipo de la clave de ordenación.</typeparam>
+    /// <param name="command">El comando que contiene los parámetros de paginación.</param>
+    /// <param name="orderKey">Una expresión que define la clave de ordenación para las entidades.</param>
+    /// <param name="mapper">Una expresión que define el mapeo de las entidades a los resultados.</param>
+    /// <returns>Una lista inmutable de resultados mapeados que cumplen con los criterios especificados.</returns>
+    ImmutableList<TResult> ImmutablePagination<TResult, TKey>(PaginationCommandHandler command, Expression<Func<T, TKey>> orderKey, Expression<Func<T, TResult>> mapper);
 }

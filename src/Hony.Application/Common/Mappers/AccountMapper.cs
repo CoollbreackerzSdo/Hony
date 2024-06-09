@@ -21,7 +21,6 @@ internal static partial class AccountMapper
         var currentTime = DateTime.UtcNow;
         return new AccountEntity
         {
-            Id = Guid.NewGuid(),
             UserName = command.UserName,
             Security = ToSecurity(command),
             Detail = ToDetail(command),

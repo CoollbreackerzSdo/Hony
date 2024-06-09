@@ -42,7 +42,7 @@ public static class ExtensionBuilderServices
         services.AddAuthorizationBuilder()
             .AddPolicy(PoliciesProviderDefault.USER_VALORICE, config
                 => config.AddAuthenticationSchemes([JwtBearerDefaults.AuthenticationScheme]).RequireRole([RolesProviderDefault.USER]).RequireAuthenticatedUser())
-            .AddPolicy(PoliciesProviderDefault.MANAGES_VALORICE,config 
+            .AddPolicy(PoliciesProviderDefault.MANAGES_VALORICE, config
                 => config.AddAuthenticationSchemes([JwtBearerDefaults.AuthenticationScheme]).RequireRole([RolesProviderDefault.MANAGER]).RequireAuthenticatedUser());
         return services;
     }

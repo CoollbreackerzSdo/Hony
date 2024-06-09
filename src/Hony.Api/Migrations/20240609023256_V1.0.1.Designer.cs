@@ -3,6 +3,7 @@ using System;
 using Hony.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Hony.Api.Migrations
 {
     [DbContext(typeof(HonyAccountsNpSqlContext))]
-    partial class HonyAccountsNpSqlContextModelSnapshot : ModelSnapshot
+    [Migration("20240609023256_V1.0.1")]
+    partial class V101
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

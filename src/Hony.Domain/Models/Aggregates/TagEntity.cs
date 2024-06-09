@@ -11,6 +11,10 @@ public sealed class TagEntity : EntityBase
     /// Obtiene o establece el nombre de la etiqueta.
     /// </summary>
     public required string Name { get; init; }
+    /// <summary>
+    /// Obtiene o establece el color de la etiqueta.
+    /// </summary>
+    public required OklhColor Color { get; set; }
 
     /// <summary>
     /// Obtiene o establece la colección de asociaciones entre etiquetas y blogs.

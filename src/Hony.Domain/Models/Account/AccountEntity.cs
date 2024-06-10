@@ -24,7 +24,7 @@ public sealed class AccountEntity : EntityBase, IRegister
     /// <summary>
     /// Obtiene o establece la colección de entidades <see cref="BlogEntity"/> asociadas.
     /// </summary>
-    public ICollection<BlogEntity>? Blogs { get; set; }
+    public ICollection<BlogEntity> Blogs { get; set; } = new HashSet<BlogEntity>();
 
     /// <summary>
     /// Obtiene o establece la colección de entidades <see cref="CommentEntity"/> asociadas.

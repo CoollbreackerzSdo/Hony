@@ -1,5 +1,10 @@
 using Hony.Domain.Models.Aggregates;
 
 namespace Hony.Application.Common.Models;
-
-public readonly record struct CategoryView(string Name, OklhColor Color);
+/// <summary>
+/// Representa una vista de una categoría con un identificador, nombre y color.
+/// </summary>
+/// <param name="Id">El identificador único de la categoría.</param>
+/// <param name="Name">El nombre de la categoría.</param>
+/// <param name="Color">El color de la categoría representado como un OklhColor.</param>
+public readonly record struct CategoryView(Guid Id, string Name, OklhColor Color);

@@ -1,4 +1,5 @@
 
+using System.Collections.Immutable;
 using System.Security.Claims;
 
 using Hony.Api.Endpoints.Filters.Validation;
@@ -20,10 +21,17 @@ public class BlogEndpoint : IEndpoint
             var handleResult = await handler.HandleAsync((new(userClaims.FindFirstValue(ClaimTypes.NameIdentifier)!), command), token);
             return handleResult.IsSuccess ? Results.Ok(handleResult.Value) : Results.NotFound();
         }).AddEndpointFilter<GenericFluentValidator<CreateBlogCommandHandler>>()
-        .Accepts<CreateBlogCommandHandler>("application/json")
         .WithDescription("Endpoint de creación de blogs")
         .Produces<BlogView>(StatusCodes.Status200OK)
         .WithTags(["Blogs"])
+        .WithOpenApi();
+
+        api.MapPost("pagination-tag", (PaginationCommandHandler command) =>
+        {
+
+        }).AddEndpointFilter<GenericFluentValidator<PaginationCommandHandler>>()
+        .WithTags(["Blogs", "Pagination"])
+        .Produces<ImmutableList<BlogView>>(StatusCodes.Status200OK)
         .WithOpenApi();
     }
 }

@@ -1,3 +1,5 @@
+using System.Collections.Immutable;
+
 using Hony.Domain.Models.Blogs;
 
 namespace Hony.Application.Common.Externals.UnitOfWord;
@@ -8,4 +10,5 @@ namespace Hony.Application.Common.Externals.UnitOfWord;
 /// </summary>
 public interface IBlogRepository : IRepository<BlogEntity>
 {
+    
 }

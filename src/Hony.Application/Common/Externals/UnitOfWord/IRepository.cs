@@ -11,8 +11,9 @@ namespace Hony.Application.Common.Externals.UnitOfWord;
 /// <summary>
 /// Interfaz genérica para un repositorio que proporciona operaciones CRUD básicas.
 /// </summary>
-/// <typeparam name="T">El tipo de entidad manejada por el repositorio.</typeparam>
+/// <typeparam name="T">El tipo de entidad manejada por el repositorio que hereda de <see cref="EntityBase"/>.</typeparam>
 public interface IRepository<T>
+    where T : EntityBase
 {
     /// <summary>
     /// Obtiene una consulta <see cref="IQueryable{T}"/> para todas las entidades del repositorio.
@@ -66,13 +67,12 @@ public interface IRepository<T>
     /// <returns>La entidad agregada.</returns>
     T AddTrack(T model);
     /// <summary>
-    /// Obtiene una lista inmutable de resultados mapeados de entidades ordenadas, aplicando paginación según el comando especificado.
+    /// Realiza paginación en una secuencia de elementos con un filtro de ordenamiento.
     /// </summary>
-    /// <typeparam name="TResult">El tipo de los resultados mapeados.</typeparam>
-    /// <typeparam name="TKey">El tipo de la clave de ordenación.</typeparam>
-    /// <param name="command">El comando que contiene los parámetros de paginación.</param>
-    /// <param name="orderKey">Una expresión que define la clave de ordenación para las entidades.</param>
-    /// <param name="mapper">Una expresión que define el mapeo de las entidades a los resultados.</param>
-    /// <returns>Una lista inmutable de resultados mapeados que cumplen con los criterios especificados.</returns>
-    ImmutableList<TResult> ImmutablePagination<TResult, TKey>(PaginationCommandHandler command, Expression<Func<T, TKey>> orderKey, Expression<Func<T, TResult>> mapper);
+    /// <typeparam name="T">El tipo de elementos en la secuencia.</typeparam>
+    /// <typeparam name="TKey">El tipo de la clave para ordenar.</typeparam>
+    /// <param name="command">El comando de paginación que contiene los parámetros de paginación.</param>
+    /// <param name="pageFilterSelector">Una expresión que selecciona la clave de ordenamiento.</param>
+    /// <returns>Una consulta IQueryable&lt;T&gt; que representa la página de elementos.</returns>
+    public IQueryable<T> Pagination<TKey>(PaginationCommandHandler command, Expression<Func<T, TKey>> pageFilterSelector);
 }

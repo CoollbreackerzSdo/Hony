@@ -15,7 +15,7 @@ namespace Hony.Infrastructure.Implementations.UnitOfWord;
 /// Implementa la interfaz <see cref="IRepository{T}"/> donde <c>T</c> es una clase que hereda de <see cref="EntityBase"/>.
 /// </summary>
 /// <typeparam name="T">El tipo de entidad gestionada por el repositorio.</typeparam>
-internal class Repository<T> : IRepository<T>
+internal abstract class Repository<T> : IRepository<T>
     where T : EntityBase
 {
     /// <summary>
@@ -62,7 +62,7 @@ internal class Repository<T> : IRepository<T>
     /// </summary>
     /// <param name="key">La clave primaria de la entidad a eliminar.</param>
     /// <returns><c>true</c> si se elimina la entidad correctamente; de lo contrario, <c>false</c>.</returns>
-    public bool ExecuteRemove(EntityKey<Guid> key)
+    public virtual bool ExecuteRemove(EntityKey<Guid> key)
         => _table.Where(x => x.Id == key).ExecuteDelete() > 0;
 
     /// <summary>
@@ -70,7 +70,7 @@ internal class Repository<T> : IRepository<T>
     /// </summary>
     /// <param name="key">La clave primaria de la entidad a desactivar.</param>
     /// <returns><c>true</c> si se desactiva la entidad correctamente; de lo contrario, <c>false</c>.</returns>
-    public bool ExecuteDisable(EntityKey<Guid> key)
+    public virtual bool ExecuteDisable(EntityKey<Guid> key)
         => _table.Where(x => x.Id == key).ExecuteUpdate(setter => setter.SetProperty(prop => prop.IsActive, false)) > 0;
 
     /// <summary>
@@ -78,36 +78,33 @@ internal class Repository<T> : IRepository<T>
     /// </summary>
     /// <param name="expression">La condición para verificar.</param>
     /// <returns><c>true</c> si alguna entidad satisface la condición; de lo contrario, <c>false</c>.</returns>
-    public bool Any(Expression<Func<T, bool>> expression)
+    public virtual bool Any(Expression<Func<T, bool>> expression)
         => _table.Any(expression);
     /// <summary>
     /// Agrega una nueva entidad a la base de datos y devuelve la entidad agregada.
     /// </summary>
     /// <param name="model">La entidad a agregar.</param>
     /// <returns>La entidad agregada.</returns>
-    public T AddTrack(T model)
+    public virtual T AddTrack(T model)
     {
         _table.Add(model);
         return model;
     }
     /// <summary>
-    /// Obtiene una lista inmutable de resultados mapeados de entidades ordenadas, aplicando paginación según el comando especificado.
+    /// Realiza paginación en una secuencia de elementos.
     /// </summary>
-    /// <typeparam name="TResult">El tipo de los resultados mapeados.</typeparam>
-    /// <typeparam name="TKey">El tipo de la clave de ordenación.</typeparam>
-    /// <param name="command">El comando que contiene los parámetros de paginación.</param>
-    /// <param name="orderKey">Una expresión que define la clave de ordenación para las entidades.</param>
-    /// <param name="mapper">Una expresión que define el mapeo de las entidades a los resultados.</param>
-    /// <returns>Una lista inmutable de resultados mapeados que cumplen con los criterios especificados.</returns>
-    public ImmutableList<TResult> ImmutablePagination<TResult, TKey>(PaginationCommandHandler command, Expression<Func<T, TKey>> orderKey, Expression<Func<T, TResult>> mapper)
+    /// <typeparam name="T">El tipo de elementos en la secuencia.</typeparam>
+    /// <param name="command">El comando de paginación que contiene los parámetros de paginación.</param>
+    /// <returns>Una consulta <see cref="IQueryable{T}"/> que representa la página de elementos.</returns>
+    public virtual IQueryable<T> Pagination<TKey>(PaginationCommandHandler command, Expression<Func<T, TKey>> pageFilterSelector)
     {
         var query = _table.AsQueryable();
         var queryOrder = command.OrderMode switch
         {
-            PageOrderMode.Desc => query.OrderBy(orderKey),
-            _ => query.OrderByDescending(orderKey)
+            PageOrderMode.Desc => query.OrderBy(pageFilterSelector),
+            _ => query.OrderByDescending(pageFilterSelector)
         };
-        return [.. queryOrder.Skip(command.Skip).Take(command.Count).Select(mapper)];
+        return queryOrder.Skip(command.Skip).Take(command.Count);
     }
     private readonly HonyAccountsNpSqlContext _context;
     private readonly DbSet<T> _table;

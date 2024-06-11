@@ -32,14 +32,14 @@ internal abstract class Repository<T> : IRepository<T>
     /// Obtiene todas las entidades del tipo especificado.
     /// </summary>
     /// <returns>Una consulta que representa todas las entidades del tipo especificado.</returns>
-    public IQueryable<T> GetAll() => _table;
+    public virtual IQueryable<T> GetAll() => _table;
 
     /// <summary>
     /// Obtiene una opción que contiene la única entidad del tipo especificado que coincide con la condición proporcionada.
     /// </summary>
     /// <param name="expression">La condición para seleccionar la entidad.</param>
     /// <returns>Una opción que contiene la única entidad encontrada o ninguna si no se encuentra ninguna coincidencia.</returns>
-    public Option<T?> SingleAsOption(Expression<Func<T, bool>> expression)
+    public virtual Option<T?> SingleAsOption(Expression<Func<T, bool>> expression)
         => _table.SingleOrDefault(expression).SomeNotNull();
 
     /// <summary>
@@ -47,14 +47,14 @@ internal abstract class Repository<T> : IRepository<T>
     /// </summary>
     /// <param name="key">La clave primaria de la entidad.</param>
     /// <returns>Una opción que contiene la entidad encontrada o ninguna si no se encuentra ninguna coincidencia.</returns>
-    public Option<T?> FindAdOption(EntityKey<Guid> key)
+    public virtual Option<T?> FindAdOption(EntityKey<Guid> key)
         => _table.Find(key).SomeNotNull();
 
     /// <summary>
     /// Agrega una nueva entidad al repositorio.
     /// </summary>
     /// <param name="model">La entidad a agregar.</param>
-    public void Add(T model)
+    public virtual void Add(T model)
         => _table.Add(model);
 
     /// <summary>
@@ -106,6 +106,6 @@ internal abstract class Repository<T> : IRepository<T>
         };
         return queryOrder.Skip(command.Skip).Take(command.Count);
     }
-    private readonly HonyAccountsNpSqlContext _context;
-    private readonly DbSet<T> _table;
+    private protected readonly HonyAccountsNpSqlContext _context;
+    private protected readonly DbSet<T> _table;
 }

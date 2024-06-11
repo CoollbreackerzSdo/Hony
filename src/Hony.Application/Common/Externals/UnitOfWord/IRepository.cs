@@ -72,7 +72,7 @@ public interface IRepository<T>
     /// <typeparam name="T">El tipo de elementos en la secuencia.</typeparam>
     /// <typeparam name="TKey">El tipo de la clave para ordenar.</typeparam>
     /// <param name="command">El comando de paginación que contiene los parámetros de paginación.</param>
-    /// <param name="pageFilterSelector">Una expresión que selecciona la clave de ordenamiento.</param>
+    /// <param name="paginationOrderSelector">Una expresión que selecciona la clave de ordenamiento.</param>
     /// <returns>Una consulta IQueryable&lt;T&gt; que representa la página de elementos.</returns>
-    public IQueryable<T> Pagination<TKey>(PaginationCommandHandler command, Expression<Func<T, TKey>> pageFilterSelector);
+    public IQueryable<T> Pagination<TKey>(PaginationCommandHandler command, Expression<Func<T, TKey>> paginationOrderSelector);
 }

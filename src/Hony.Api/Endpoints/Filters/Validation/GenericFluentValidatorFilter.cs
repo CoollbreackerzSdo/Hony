@@ -8,7 +8,7 @@ namespace Hony.Api.Endpoints.Filters.Validation;
 /// </summary>
 /// <typeparam name="T">El tipo de entidad a validar.</typeparam>
 /// <param name="validator">El validador para la entidad de tipo <typeparamref name="T"/>.</param>
-public class GenericFluentValidator<T>(IValidator<T> validator) : IEndpointFilter
+public class GenericFluentValidatorFilter<T>(IValidator<T> validator) : IEndpointFilter
 {
     /// <summary>
     /// Invoca el filtro de validación de endpoint.

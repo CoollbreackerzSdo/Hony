@@ -6,6 +6,7 @@ using Hony.Application.Common.Models;
 using Hony.Application.Common.Validators;
 using Hony.Application.Services.Handlers;
 using Hony.Application.Services.Handlers.Create;
+using Hony.Application.Services.Handlers.Delete;
 using Hony.Application.Services.Handlers.Pagination;
 using Hony.Application.Services.Handlers.Validation;
 using Hony.Domain.Models.Account;
@@ -60,6 +61,7 @@ public static class ExtensionsBuilderServices
         services.AddTransient<IHandlerAsync<(Guid, CreateBlogCommandHandler), BlogView>, CreateBlogHandler>();
         services.AddTransient<IHandlerAsync<CreateCategoryCommandHandler>, CreateCategoryHandler>();
         services.AddTransient<IHandler<PaginationCommandHandler, ImmutableList<CategoryView>>, PaginationCategoryHandler>();
+        services.AddTransient<IHandler<AccountComponentValidation>, DisableBlogHandler>();
         return services;
     }
 

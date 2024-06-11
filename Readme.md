@@ -10,6 +10,10 @@ Publicaciones de blog: Crear, leer, actualizar y eliminar publicaciones.
 Usuarios: Registro de usuarios, autenticación y gestión de perfiles.
 Comentarios: Añadir y gestionar comentarios en las publicaciones.
 
+## Vista previa
+
+![](./docs/Images/loby.png)
+
 ### Construyendo y ejecutando su aplicación
 
 Cuando esté listo, inicie su aplicación ejecutando:

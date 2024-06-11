@@ -18,6 +18,7 @@ internal sealed class PaginationCategoryHandler(IUnitOfWord word) : IHandler<Pag
         => word.CategoryRepository.Pagination(command, x => x.Name).Select(x => new CategoryView(
             x.Id,
             x.Name,
-            x.Color
+            x.Color,
+            x.Blogs.Count()
         )).ToImmutableList();
 }

@@ -18,7 +18,7 @@ public class CategoryEndpoint : IEndpoint
 
         api.MapPost("", async (CreateCategoryCommandHandler command, IHandlerAsync<CreateCategoryCommandHandler> handler, CancellationToken token)
                     => (await handler.HandleAsync(command, token)).ToMinimalApiResult())
-        .AddEndpointFilter<GenericFluentValidator<CreateCategoryCommandHandler>>()
+        .AddEndpointFilter<GenericFluentValidatorFilter<CreateCategoryCommandHandler>>()
         .Produces(StatusCodes.Status200OK)
         .ProducesProblem(StatusCodes.Status409Conflict)
         .WithDescription("Endpoint de creación de tags para blogs")
@@ -26,12 +26,21 @@ public class CategoryEndpoint : IEndpoint
         .RequireAuthorization([PoliciesProviderDefault.USER_VALORICE])
         .WithOpenApi();
 
-        api.MapPost("pagination-name", (PaginationCommandHandler command, IHandler<PaginationCommandHandler, ImmutableList<CategoryView>> handler)
+        api.MapPost("pagination", (PaginationCommandHandler command, IHandler<PaginationCommandHandler, ImmutableList<CategoryView>> handler)
             => Results.Ok(handler.Handle(command).Value))
-        .AddEndpointFilter<GenericFluentValidator<PaginationCommandHandler>>()
+        .AddEndpointFilter<GenericFluentValidatorFilter<PaginationCommandHandler>>()
         .Produces<ImmutableList<CategoryView>>(StatusCodes.Status200OK)
-        .WithDescription("Endpoint de paginación de tags")
+        .WithDescription("Endpoint de paginación de tags ordenados por nombre")
         .WithTags(["Category", "Pagination"])
+        .RequireAuthorization([PoliciesProviderDefault.USER_VALORICE])
+        .WithOpenApi();
+
+        api.MapPost("filter-uses", () =>
+        {
+
+        }).WithTags(["Category", "Pagination"])
+        .WithDescription("Endpoint de paginación de tags ordenado por cantidad de usos")
+        .Produces<ImmutableList<CategoryView>>(StatusCodes.Status200OK)
         .RequireAuthorization([PoliciesProviderDefault.USER_VALORICE])
         .WithOpenApi();
     }

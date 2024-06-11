@@ -1,3 +1,5 @@
+using System.Text.Json;
+
 using Hony.Domain.Models.Aggregates;
 
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -23,7 +25,7 @@ public sealed class CategoryConfiguration : EntityBaseConfiguration<CategoryEnti
             .IsUnicode()
             .IsRequired()
             .HasColumnName("name");
-        
+
         // Configuración del color de la categoría
         builder.OwnsOne(x => x.Color, nav => nav.ToJson());
 

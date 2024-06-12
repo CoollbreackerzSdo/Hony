@@ -35,4 +35,8 @@ public interface IUnitOfWord : IDisposable
     /// Obtiene el repositorio de Categorías.
     /// </summary>
     ICategoryRepository CategoryRepository { get; }
+    /// <summary>
+    /// Obtiene el repositorio de combinación de blog y categorías Categorías.
+    /// </summary>
+    ICategoryBlogsRepository CategoryBlogsRepository { get; }
 }

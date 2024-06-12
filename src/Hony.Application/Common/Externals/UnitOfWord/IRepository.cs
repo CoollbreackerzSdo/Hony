@@ -74,5 +74,5 @@ public interface IRepository<T>
     /// <param name="command">El comando de paginación que contiene los parámetros de paginación.</param>
     /// <param name="paginationOrderSelector">Una expresión que selecciona la clave de ordenamiento.</param>
     /// <returns>Una consulta IQueryable&lt;T&gt; que representa la página de elementos.</returns>
-    public IQueryable<T> Pagination<TKey>(PaginationCommandHandler command, Expression<Func<T, TKey>> paginationOrderSelector);
+    public IQueryable<T> Pagination<TKey>(PaginationEntity command, Expression<Func<T, TKey>> paginationOrderSelector);
 }

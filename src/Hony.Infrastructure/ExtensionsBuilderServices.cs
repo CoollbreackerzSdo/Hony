@@ -20,6 +20,7 @@ public static class ExtensionsBuilderServices
     {
         services.AddDbContext<HonyAccountsNpSqlContext>(config =>
         {
+            config.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTrackingWithIdentityResolution);
             config.UseNpgsql(Environment.GetEnvironmentVariable("POST_CONNECTION"), b => b.MigrationsAssembly("Hony.Api"));
         });
 

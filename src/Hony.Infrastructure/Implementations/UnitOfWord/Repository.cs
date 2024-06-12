@@ -96,7 +96,7 @@ internal abstract class Repository<T> : IRepository<T>
     /// <typeparam name="T">El tipo de elementos en la secuencia.</typeparam>
     /// <param name="command">El comando de paginación que contiene los parámetros de paginación.</param>
     /// <returns>Una consulta <see cref="IQueryable{T}"/> que representa la página de elementos.</returns>
-    public virtual IQueryable<T> Pagination<TKey>(PaginationCommandHandler command, Expression<Func<T, TKey>> pageFilterSelector)
+    public virtual IQueryable<T> Pagination<TKey>(PaginationEntity command, Expression<Func<T, TKey>> pageFilterSelector)
     {
         var query = _table.AsQueryable();
         var queryOrder = command.OrderMode switch

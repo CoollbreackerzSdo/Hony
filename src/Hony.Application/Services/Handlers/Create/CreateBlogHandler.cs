@@ -8,7 +8,7 @@ namespace Hony.Application.Services.Handlers.Create;
 /// Manejador para la creación de un blog.
 /// </summary>
 /// <param name="word">Unidad de trabajo para interactuar con el repositorio.</param>
-public class CreateBlogHandler(IUnitOfWord word) : IHandlerAsync<(Guid, CreateBlogCommandHandler), BlogView>
+internal class CreateBlogHandler(IUnitOfWord word) : IHandlerAsync<(Guid, CreateBlogCommandHandler), BlogView>
 {
     /// <summary>
     /// Maneja la creación de un nuevo blog de forma asincrónica.

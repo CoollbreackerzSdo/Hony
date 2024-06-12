@@ -4,7 +4,7 @@ using Hony.Application.Common.Models;
 
 namespace Hony.Application.Common.Validators;
 
-public class PaginationValidator : AbstractValidator<PaginationCommandHandler>
+public class PaginationValidator : AbstractValidator<PaginationEntity>
 {
     public PaginationValidator()
     {

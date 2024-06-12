@@ -26,9 +26,9 @@ public class CategoryEndpoint : IEndpoint
         .RequireAuthorization([PoliciesProviderDefault.USER_VALORICE])
         .WithOpenApi();
 
-        api.MapPost("pagination", (PaginationCommandHandler command, IHandler<PaginationCommandHandler, ImmutableList<CategoryView>> handler)
+        api.MapPost("pagination", (PaginationEntity command, IHandler<PaginationEntity, ImmutableList<CategoryView>> handler)
             => Results.Ok(handler.Handle(command).Value))
-        .AddEndpointFilter<GenericFluentValidatorFilter<PaginationCommandHandler>>()
+        .AddEndpointFilter<GenericFluentValidatorFilter<PaginationEntity>>()
         .Produces<ImmutableList<CategoryView>>(StatusCodes.Status200OK)
         .WithDescription("Endpoint de paginación de tags ordenados por nombre")
         .WithTags(["Category", "Pagination"])

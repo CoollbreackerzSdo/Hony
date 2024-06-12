@@ -28,13 +28,19 @@ public class BlogEndpoint : IEndpoint
         .WithTags(["Blogs"])
         .WithOpenApi();
 
-        api.MapPost("pagination", (PaginationCommandHandler command) =>
-        {
-
-        }).AddEndpointFilter<GenericFluentValidatorFilter<PaginationCommandHandler>>()
+        api.MapPost("pagination-public", (PaginationEntity command, IHandler<PaginationEntity, ImmutableList<BlogPublicView>> handler)
+            => Results.Ok(handler.Handle(command))).AddEndpointFilter<GenericFluentValidatorFilter<PaginationEntity>>()
         .WithTags(["Blogs", "Pagination"])
         .Produces<ImmutableList<BlogView>>(StatusCodes.Status200OK)
-        .WithDescription("Endpoint de paginación en base al nombre de blogs")
+        .WithDescription("Endpoint de paginación de blogs públicos")
+        .WithOpenApi();
+
+        api.MapPost("pagination", (PaginationEntity command, ClaimsPrincipal userClaims) =>
+        {
+
+        }).WithTags(["Blogs", "Pagination"])
+        .Produces<ImmutableList<BlogView>>(StatusCodes.Status200OK)
+        .WithDescription("Endpoint de paginación de blogs privados del usuario")
         .WithOpenApi();
 
         api.MapDelete("{id}", (Guid id, IHandler<AccountComponentValidation> handler, ClaimsPrincipal claims)

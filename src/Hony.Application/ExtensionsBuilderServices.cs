@@ -45,7 +45,7 @@ public static class ExtensionsBuilderServices
         services.AddTransient<IValidator<ValidateAccountCommandHandler>, ValidateAccountValidator>();
         services.AddTransient<IValidator<CreateAccountCommandHandler>, CreateAccountValidator>();
         services.AddTransient<IValidator<CreateCategoryCommandHandler>, CreateCategoryValidator>();
-        services.AddTransient<IValidator<PaginationCommandHandler>, PaginationValidator>();
+        services.AddTransient<IValidator<PaginationEntity>, PaginationValidator>();
         return services;
     }
 
@@ -60,8 +60,9 @@ public static class ExtensionsBuilderServices
         services.AddTransient<IHandlerAsync<CreateAccountCommandHandler, AccountCredentials>, CreateAccountHandler>();
         services.AddTransient<IHandlerAsync<(Guid, CreateBlogCommandHandler), BlogView>, CreateBlogHandler>();
         services.AddTransient<IHandlerAsync<CreateCategoryCommandHandler>, CreateCategoryHandler>();
-        services.AddTransient<IHandler<PaginationCommandHandler, ImmutableList<CategoryView>>, PaginationCategoryHandler>();
+        services.AddTransient<IHandler<PaginationEntity, ImmutableList<CategoryView>>, PaginationCategoryHandler>();
         services.AddTransient<IHandler<AccountComponentValidation>, DisableBlogHandler>();
+        services.AddTransient<IHandler<PaginationEntity, ImmutableList<BlogPublicView>>, PaginationPublicBlogHandler>();
         return services;
     }
 
